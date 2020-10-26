@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/hermes2020dbserver/databases/Hermes-chat_db",
+      "type": "mssql.azure",
+      "connectionId": "HermesDB",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
