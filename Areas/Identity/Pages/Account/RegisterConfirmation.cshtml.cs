@@ -21,6 +21,7 @@ namespace Hermes_chat.Areas.Identity.Pages.Account
             _sender = sender;
         }
 
+        public string UserName { get; set; }
         public string Email { get; set; }
 
         public bool DisplayConfirmAccountLink { get; set; }
