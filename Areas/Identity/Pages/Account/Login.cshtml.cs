@@ -28,6 +28,8 @@ namespace Hermes_chat.Areas.Identity.Pages.Account
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+
+            ExternalLogins = _signInManager.GetExternalAuthenticationSchemesAsync().GetAwaiter().GetResult().ToList();
         }
 
         [BindProperty]
@@ -44,6 +46,7 @@ namespace Hermes_chat.Areas.Identity.Pages.Account
         {
             [Required]
             [DataType(DataType.Text)]
+            [Display(Name = "Username")]
             public string UserName { get; set; }
 
             [Required]
@@ -64,9 +67,7 @@ namespace Hermes_chat.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);            
 
             ReturnUrl = returnUrl;
         }
