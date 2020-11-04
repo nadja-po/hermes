@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Hermes_chat.Services;
+using Hermes_chat.Hubs;
 
 namespace Hermes_chat
 {
@@ -48,6 +49,7 @@ namespace Hermes_chat
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddRazorPages();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +80,7 @@ namespace Hermes_chat
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
