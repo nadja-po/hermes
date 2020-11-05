@@ -12,10 +12,15 @@ namespace Hermes_chat.Controllers
 {
     public class ChatController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
+        public ChatController(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
 
         public IActionResult ChatUsers()
         {
-            return View();
+            return View(_userManager.Users.ToList());
         }
 
         public IActionResult TestChat()
