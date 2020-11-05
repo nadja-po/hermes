@@ -12,5 +12,10 @@ namespace Hermes_chat.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
+
+        public async Task SendMessageUser(string user, string message)
+        {
+            await Clients.User(user).SendAsync("ReceiveMessage", user, message);
+        }
     }
 }

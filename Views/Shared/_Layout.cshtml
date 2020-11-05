@@ -19,21 +19,20 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-                </div>
+                    <ul class="navbar-nav ml-auto">
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Chat" asp-action="TestChat">Test</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Chat" asp-action="ChatUsers">UserList</a>
+                            </li>
+                        }
 
-                <ul class="navbar-nav flex-grow">
-                    @if (Context.User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Chat" asp-action="ChatUsers">
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Chat" asp-action="TestChat">
-                            </a>
-                        </li>
-                    }
-                </ul>
+                    </ul>
+
+                </div>
 
             </div>
         </nav>

@@ -1,5 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Users online";
 }
+@if (Context.User.Identity.IsAuthenticated)
+{
 
-<h1>Users online</h1>
+    <h1>Users online</h1>
+}

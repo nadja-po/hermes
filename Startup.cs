@@ -78,7 +78,7 @@ namespace Hermes_chat
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Chat}/{action=ChatTest}/{id?}");
+                    pattern: "{controller=Chat}/{action=TestChat}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chathub");
             });
