@@ -27,5 +27,12 @@ namespace Hermes_chat.Controllers
         {
             return View();
         }
+
+        public IActionResult Users(string userName)  
+        {
+            //var name = _userManager.FindByNameAsync(userName);
+            ViewBag.name = userName;
+            return View();
+        }
     }
 }

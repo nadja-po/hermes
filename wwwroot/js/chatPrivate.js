@@ -21,11 +21,11 @@ connection.start().then(function () {
 });
 
 
-document.getElementById("sendButton").addEventListener("click", function (event) {    
+document.getElementById("sendButton").addEventListener("click", function (event) {
     var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", message).catch(function (err) {
+    var user = document.getElementById("userName").value;
+    connection.invoke("SendMessageUser", user, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
-
