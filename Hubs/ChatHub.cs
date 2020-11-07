@@ -32,8 +32,8 @@ namespace Hermes_chat.Hubs
             await Clients.User(user).SendAsync("ReceiveMessage", signin, message);
 
         }
-
-        //notification function for incoming and outgoing users
+        //Connecting and disconnecting  
+        //Notification function for incoming and outgoing users
         public override async Task OnConnectedAsync()
         {
                 await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} entered the chat");
