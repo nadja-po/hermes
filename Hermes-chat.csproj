@@ -6,6 +6,13 @@
     <RootNamespace>Hermes_chat</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Hermes_UITests\**" />
+    <Content Remove="Hermes_UITests\**" />
+    <EmbeddedResource Remove="Hermes_UITests\**" />
+    <None Remove="Hermes_UITests\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.9" />
