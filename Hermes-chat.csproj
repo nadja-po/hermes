@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Hermes_UITests\**" />
-    <Content Remove="Hermes_UITests\**" />
-    <EmbeddedResource Remove="Hermes_UITests\**" />
-    <None Remove="Hermes_UITests\**" />
+    <Compile Remove="Hermes_UITest\**" />
+    <Compile Remove="Hermes_UnitTest\**" />
+    <Content Remove="Hermes_UITest\**" />
+    <Content Remove="Hermes_UnitTest\**" />
+    <EmbeddedResource Remove="Hermes_UITest\**" />
+    <EmbeddedResource Remove="Hermes_UnitTest\**" />
+    <None Remove="Hermes_UITest\**" />
+    <None Remove="Hermes_UnitTest\**" />
   </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.9" />
