@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Hermes_chat.Services;
 using Hermes_chat.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Hermes_chat
 {
@@ -47,6 +48,8 @@ namespace Hermes_chat
             //email confirmation
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
             services.AddRazorPages();
             services.AddSignalR();

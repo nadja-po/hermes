@@ -27,5 +27,11 @@ namespace Hermes_chat.Controllers
         {
             return View();
         }
+
+        public IActionResult Users(string userName)  
+        {
+            ViewBag.name = userName;
+            return View();
+        }
     }
 }

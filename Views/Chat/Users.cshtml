@@ -1,21 +1,19 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+﻿
 @{
     ViewData["Title"] = "Users";
 }
 
 @if (Context.User.Identity.IsAuthenticated)
 {
-    <input type="hidden" id="mainChat" value="1" />
+    <input type="hidden" id="mainChat" value="0" />
     <div class="row">
         <div class="col-12 col-md-8">
             <div class="container">
                 <div class="row">&nbsp;</div>
-                @*<div class="row">
-                        <div class="col-2">User</div>
-                        <div class="col-4"><input type="text" id="userInput" /></div>
-                    </div>*@
+
                 <div class="row">
-                    <div class="col-2">Message</div>
+                    <div class="col-2">Message to @ViewBag.name</div>
+                    <input type="hidden" id="userName" value="@ViewBag.name" />
                     <div class="col-4"><input type="text" id="messageInput" /></div>
                 </div>
                 <div class="row">&nbsp;</div>
@@ -37,18 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <p>Click on a user to start a private chat:</p>
-            <div class="list-group">
-                @foreach (var user in Model)
-                {
-                    <a type="button" class="list-group-item list-group-item-action"
-                       asp-controller="Chat" asp-action="Users" asp-route-userName="@user.UserName">
-                        @user.UserName
-                    </a>
-                }
-            </div>
-        </div>
+
     </div>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>

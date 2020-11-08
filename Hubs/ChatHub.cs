@@ -21,12 +21,28 @@ namespace Hermes_chat.Hubs
             await Clients.All.SendAsync("ReceiveMessage", signin, message);
         }
 
-        
-        //CODE BELOW MIGHT BE USEFUL PRIVATE CHAT
-        //public async Task SendMessageUser(string user, string message)
-        //{
-        //    var signin = _signInManager.Context.User.Identity.Name;
-        //    await Clients.User(user).SendAsync("ReceiveMessage", signin, message);
-        //}
+
+        //PRIVATE MESSAGE
+        public async Task SendMessageUser(string user, string message)
+        {
+            
+            var signin = _signInManager.Context.User.Identity.Name;
+            if (Context.UserIdentifier != user)
+                await Clients.User(Context.UserIdentifier).SendAsync("ReceiveMessage", signin, message);
+            await Clients.User(user).SendAsync("ReceiveMessage", signin, message);
+
+        }
+        //Connecting and disconnecting  
+        //Notification function for incoming and outgoing users
+        public override async Task OnConnectedAsync()
+        {
+                await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} entered the chat");
+                await base.OnConnectedAsync();
+        }
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} left the chat");
+            await base.OnDisconnectedAsync(exception);
+        }
     }
 }
