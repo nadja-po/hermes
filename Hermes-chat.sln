@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hermes-chat", "Hermes-chat.csproj", "{B7678695-B6D3-4F04-ADA8-B03045180EF2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hermes_UITest", "Hermes_UITest\Hermes_UITest.csproj", "{20B5C6C7-45C6-434F-AA06-B5DC71526530}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hermes_Testing", "Hermes_Testing", "{D93CACAB-D4A4-4565-AAA7-CC354D55C607}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{B7678695-B6D3-4F04-ADA8-B03045180EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7678695-B6D3-4F04-ADA8-B03045180EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7678695-B6D3-4F04-ADA8-B03045180EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20B5C6C7-45C6-434F-AA06-B5DC71526530} = {D93CACAB-D4A4-4565-AAA7-CC354D55C607}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB2D33A9-C6F8-4EF3-B662-43439BE40004}
