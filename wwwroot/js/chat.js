@@ -39,6 +39,7 @@ if (document.getElementById("mainChat").value == 1) {
             return console.error(err.toString());
         });
         event.preventDefault();
+        document.getElementById("messageInput").value = "";
     });
 }
 //sending messages to the private chat:
@@ -51,5 +52,6 @@ else {
             return console.error(err.toString());
         });
         event.preventDefault();
+        document.getElementById("messageInput").value = "";
     });
 }
