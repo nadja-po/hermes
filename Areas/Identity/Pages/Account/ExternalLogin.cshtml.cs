@@ -49,7 +49,7 @@ namespace Hermes_chat.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(50)]
+            [StringLength(20)]
             [DataType(DataType.Text)]
             [Display(Name = "Username")]
             public string UserName { get; set; }
