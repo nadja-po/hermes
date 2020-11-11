@@ -5,28 +5,28 @@
 
 @if (Context.User.Identity.IsAuthenticated)
 {
-    <input type="hidden" id="mainChat" value="1" />
+    <input type="hidden" id="mainChat" value="3" />
     <div class="row">
         <div class="col-12 col-md-8">
             <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
                 <ul class="list-unstyled" id="messagesList"></ul>
             </div>
             <div class="row">&nbsp;</div>
-          
-        <div class="row">
-            <div class="col-12 col-md-8"><input type="text" id="messageInput" class="form-control" /></div>
-            <div class="col-12 col-md-4"><input type="button" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
-         
-        </div>
+
+            <div class="row">
+                <div class="col-12 col-md-8"><input type="text" id="messageInput" class="form-control" /></div>
+                <div class="col-12 col-md-4"><input type="button" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+
+            </div>
             <div class="row">&nbsp;</div>
         </div>
         <div class="col-12 col-md-4">
-            <p>Click on a user to start a private chat:</p>
+            <p>Add new user in the group:</p>
             <div class="list-group">
                 @foreach (var user in Model)
                 {
                     <a type="button" class="list-group-item list-group-item-action"
-                       asp-controller="Chat" asp-action="Users" asp-route-userName="@user.UserName">
+                       asp-controller="Chat" asp-action="Groups" asp-route-groupName="@ViewBag.Group.GroupName">
                         @user.UserName
                     </a>
                 }
@@ -36,3 +36,4 @@
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
 }
+
