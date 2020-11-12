@@ -12,7 +12,7 @@
     <input type="button" id="leaveButton" class="btn" value="Leave Group" />
     <input type="hidden" id="mainChat" value="3" />
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-9">
             <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
                 <ul class="list-unstyled" id="messagesList"></ul>
             </div>
@@ -25,14 +25,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-8"><input type="text" id="messageInput" class="form-control" /></div>
+                <div class="col-12 col-md-12"><input type="text" id="messageInput" class="form-control" /></div>
                 <div class="col-12 col-md-4"><input type="button" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
 
             </div>
             <div class="row">&nbsp;</div>
         </div>
-        <div class="col-12 col-md-3">
-            <p>Users in this group:</p>
+        <!--<div class="col-12 col-md-3">
+            <p>Users in this group:</p>-->
             @*<div class="list-group" >
                     @foreach (var user in ViewBag.Users)
                     {
@@ -41,8 +41,8 @@
                         </a>
                     }
                 </div>*@
-        </div>
-        <div class="col-12 col-md-3">
+        <!--</div>-->
+        @*<div class="col-12 col-md-3">
             <p>Add new user in the group:</p>
             <div class="list-group">
                 @foreach (var user in Model)
@@ -51,7 +51,7 @@
                     <div><input type="button" class="list-group-item list-group-item-action" id="joinButton" value="@user.UserName" /></div>
                 }
             </div>
-        </div>
+        </div>*@
     </div>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>

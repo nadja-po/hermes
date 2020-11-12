@@ -24,7 +24,8 @@ namespace Hermes_chat.Controllers
 
         public IActionResult ChatUsers()
         {
-            //ViewBag.Groups = groupManager.GetAllGroups();
+            ViewBag.Groups = groupManager.GetAllGroups();
+
             return View(_userManager.Users.ToList());
         }
 
