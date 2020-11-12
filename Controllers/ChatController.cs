@@ -42,13 +42,13 @@ namespace Hermes_chat.Controllers
         [HttpPost]
         public IActionResult CreateGroup(Group model)
         {
-            //ClaimsPrincipal currentUser = this.User;
-            //ViewBag.CreatorId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.CreatorId = _userManager.GetUserId(User);
+            ViewBag.userName = _userManager.GetUserName(User);
             if (ModelState.IsValid)
             {
-                groupManager.CreateGroup(model.ToData());
-                return RedirectToAction(nameof(Group));
+                int _id = groupManager.CreateGroup(model.ToData());
+                return RedirectToAction("Groups", "Chat", new {id = _id});
+                
             }
             else
             {
@@ -60,14 +60,16 @@ namespace Hermes_chat.Controllers
         public IActionResult Groups(int? id)
         {
             var groups = groupManager.GetAllGroups();
+            ViewBag.Groups = groups;
             if (id.HasValue)
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
-                var users = groupManager.GetUsersByGroup(id.Value);
-                ViewBag.Group = activeGroup;
-                ViewBag.Users = users;
+                //var users = groupManager.GetUsersByGroup(id.Value);
+                ViewBag.Group = activeGroup.GroupName;
+                ViewBag.userName = _userManager.GetUserName(User);
+                //ViewBag.Users = users;
             }
-            ViewBag.Groups = groupManager.GetAllGroups();
+            
             return View(_userManager.Users.ToList());
         }
 

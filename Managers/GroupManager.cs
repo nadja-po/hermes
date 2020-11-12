@@ -1,15 +1,17 @@
 ﻿using Hermes_chat.Data;
 using Hermes_chat.Models;
 using Hermes_chat.Repositories;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hermes_chat.Managers
 {
-    public class GroupManager
+    public class GroupManager 
     {
         public GroupManager() 
         {
@@ -32,9 +34,11 @@ namespace Hermes_chat.Managers
             throw new NotImplementedException();
         }
 
-        public void CreateGroup(Group group)
+        public int CreateGroup(Group group)
         {
             chatGroup.CreateGroup(group);
+            var id = group.Id;
+            return id;
         }
 
         public void DeleteGroup(int id)
@@ -47,5 +51,15 @@ namespace Hermes_chat.Managers
             return chatGroup.GetUsersByGroup(groupId);
             throw new NotImplementedException();
         }
+
+        //public Task AddToGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task RemoveFromGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

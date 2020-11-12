@@ -27,6 +27,7 @@ namespace Hermes_chat.Repositories
             }
 
         }
+       
         public List<Group> GetAllGroups()
         {
             using (var db = this.db)
@@ -53,13 +54,14 @@ namespace Hermes_chat.Repositories
 
         }
 
-        public void CreateGroup(Group group)
+        public int CreateGroup(Group group)
         {
             using (var db = this.db)
             {
                 db.Group.Add(group);
-
                 db.SaveChanges();
+                var id = group.Id;
+                return id;
             }
         }
 

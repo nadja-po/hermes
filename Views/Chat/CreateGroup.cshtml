@@ -7,19 +7,21 @@
     <form asp-controller="Chat" asp-action="CreateGroup" method="post">
         <div class="form-group">
             <label asp-for="GroupName">Enter the group name</label>
-            <input asp-for="GroupName" class="form-control" />
+            <input id="GroupName" asp-for="GroupName" class="form-control" />
             <span asp-validation-for="GroupName" class="text-danger"></span>
+
         </div>
-        <div class="form-group">
-            <input asp-for="CreatorId" type="hidden" name="CreatorId" id="CreatorId" value="@ViewBag.CreatorId" />
-        </div>
-        <p>creator ID = @ViewBag.CreatorId</p>
-        <button type="submit" class="btn btn-primary">Save</button>
+
+        <input asp-for="CreatorId" type="hidden" name="CreatorId" id="CreatorId" value="@ViewBag.CreatorId" />
+        <input asp-for="Users" type="hidden" name="userName" id="userName" value="@ViewBag.userName" />
+
+        <button type="submit" class="btn btn-primary">Create group</button>
+        
     </form>
 
 
-
-
+  <script src="~/js/signalr/dist/browser/signalr.js"></script>
+  <script src="~/js/chat.js"></script>
 }
 
 
