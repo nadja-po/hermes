@@ -9,12 +9,20 @@
   <ItemGroup>
     <Compile Remove="Hermes_UITest\**" />
     <Compile Remove="Hermes_UnitTest\**" />
+    <Compile Remove="Logic\**" />
+    <Compile Remove="Repositories\**" />
     <Content Remove="Hermes_UITest\**" />
     <Content Remove="Hermes_UnitTest\**" />
+    <Content Remove="Logic\**" />
+    <Content Remove="Repositories\**" />
     <EmbeddedResource Remove="Hermes_UITest\**" />
     <EmbeddedResource Remove="Hermes_UnitTest\**" />
+    <EmbeddedResource Remove="Logic\**" />
+    <EmbeddedResource Remove="Repositories\**" />
     <None Remove="Hermes_UITest\**" />
     <None Remove="Hermes_UnitTest\**" />
+    <None Remove="Logic\**" />
+    <None Remove="Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,12 +38,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="SendGrid" Version="9.21.0" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Logic\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hermes_UITest", "Hermes_UIT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hermes_Testing", "Hermes_Testing", "{D93CACAB-D4A4-4565-AAA7-CC354D55C607}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermes_Services", "Hermes_Services\Hermes_Services\Hermes_Services.csproj", "{F417EB6B-5BCB-4732-8BCC-4091E68BF093}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20B5C6C7-45C6-434F-AA06-B5DC71526530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F417EB6B-5BCB-4732-8BCC-4091E68BF093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F417EB6B-5BCB-4732-8BCC-4091E68BF093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F417EB6B-5BCB-4732-8BCC-4091E68BF093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F417EB6B-5BCB-4732-8BCC-4091E68BF093}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
