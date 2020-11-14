@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Hermes_chat.Services;
 using Hermes_chat.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Hermes_chat
 {
@@ -50,6 +52,8 @@ namespace Hermes_chat
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             services.AddRazorPages();
             services.AddSignalR();

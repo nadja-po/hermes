@@ -1,0 +1,27 @@
+﻿@model Group
+@{ ViewData["Title"] = "CreateGroup"; }
+
+@if (Context.User.Identity.IsAuthenticated)
+{
+    <h1>New group</h1>
+    <form asp-controller="Chat" asp-action="CreateGroup" method="post">
+        <div class="form-group">
+            <label asp-for="GroupName">Enter the group name</label>
+            <input id="GroupName" asp-for="GroupName" class="form-control" />
+            <span asp-validation-for="GroupName" class="text-danger"></span>
+
+        </div>
+
+        <input asp-for="CreatorId" type="hidden" name="CreatorId" id="CreatorId" value="@ViewBag.CreatorId" />
+        <input asp-for="Users" type="hidden" name="userName" id="userName" value="@ViewBag.userName" />
+
+        <button type="submit" class="btn btn-primary">Create group</button>
+        
+    </form>
+
+
+  <script src="~/js/signalr/dist/browser/signalr.js"></script>
+  <script src="~/js/chat.js"></script>
+}
+
+

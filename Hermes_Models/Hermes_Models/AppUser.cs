@@ -9,7 +9,8 @@ namespace Hermes_Models
         {
             Messages = new HashSet<Message>();
         }
-        
+       
+
         public virtual ICollection<Message> Messages { get; set; }
     }
 }

@@ -44,5 +44,25 @@ namespace Hermes_chat.Hubs
             await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} left the chat");
             await base.OnDisconnectedAsync(exception);
         }
+
+        //CHAT ROOMS
+        public async Task JoinGroup(string groupName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            await Clients.Group(groupName).SendAsync("Notify", $"{ Context.UserIdentifier} added to group");
+        }
+
+        public async Task LeaveGroup(string groupName)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+            await Clients.Group(groupName).SendAsync(Context.UserIdentifier + " left group");
+        }
+
+        public async Task SendMessageGroup(string message, string groupName)
+        {
+            var signin = _signInManager.Context.User.Identity.Name;
+            await Clients.Group(groupName).SendAsync("ReceiveMessage", signin, message).ConfigureAwait(true);
+        }
+        
     }
 }

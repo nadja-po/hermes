@@ -22,10 +22,9 @@ connection.start().then(function () {
 
 //sending messages to the main chat:
 if (document.getElementById("mainChat").value == 1) {
-      
+
     //notification function for incoming and outgoing users
     connection.on('Notify', function (message) {
-
         let notifyElem = document.createElement("b");
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
@@ -39,11 +38,20 @@ if (document.getElementById("mainChat").value == 1) {
             return console.error(err.toString());
         });
         event.preventDefault();
+        document.getElementById("messageInput").value = "";
     });
 }
 //sending messages to the private chat:
-else {
-    
+else if (document.getElementById("mainChat").value == 0) {
+
+    connection.on('Notify', function (message) {
+        let notifyElem = document.createElement("b");
+        notifyElem.appendChild(document.createTextNode(message));
+        let elem = document.createElement("p");
+        elem.appendChild(notifyElem);
+        document.getElementById("messagesList").appendChild(elem);
+    });
+
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
         var user = document.getElementById("userName").value;
@@ -51,5 +59,39 @@ else {
             return console.error(err.toString());
         });
         event.preventDefault();
+        document.getElementById("messageInput").value = "";
     });
 }
+//sending messages to the chat room:
+else if (document.getElementById("mainChat").value == 3)
+{
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var message = document.getElementById("messageInput").value;
+        //var user = document.getElementById("userName").value;
+        var groupName = document.getElementById("groupName").value;
+        connection.invoke("SendMessageGroup", message, groupName).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
+        document.getElementById("messageInput").value = "";
+    });
+}
+
+//join chat
+document.getElementById("joinButton").addEventListener("click", function (event) {
+    var groupName = document.getElementById("groupName").value;
+    //var user = document.getElementById("userName").value;
+    connection.invoke("JoinGroup", groupName).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+//leave chat
+document.getElementById("leaveButton").addEventListener("click", function (event) {
+    var groupName = document.getElementById("groupName").value;
+    //var user = document.getElementById("userName").value;
+    connection.invoke("LeaveGroup", groupName).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
