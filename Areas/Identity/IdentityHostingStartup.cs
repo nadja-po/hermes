@@ -1,5 +1,5 @@
 ﻿using System;
-using Hermes_chat.Data;
+using Hermes_Services.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;

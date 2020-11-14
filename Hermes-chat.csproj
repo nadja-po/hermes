@@ -7,21 +7,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Hermes_Models\**" />
+    <Compile Remove="Hermes_Services\**" />
     <Compile Remove="Hermes_UITest\**" />
     <Compile Remove="Hermes_UnitTest\**" />
     <Compile Remove="Logic\**" />
+    <Compile Remove="Models\**" />
     <Compile Remove="Repositories\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Hermes_Models\**" />
+    <Content Remove="Hermes_Services\**" />
     <Content Remove="Hermes_UITest\**" />
     <Content Remove="Hermes_UnitTest\**" />
     <Content Remove="Logic\**" />
+    <Content Remove="Models\**" />
     <Content Remove="Repositories\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Hermes_Models\**" />
+    <EmbeddedResource Remove="Hermes_Services\**" />
     <EmbeddedResource Remove="Hermes_UITest\**" />
     <EmbeddedResource Remove="Hermes_UnitTest\**" />
     <EmbeddedResource Remove="Logic\**" />
+    <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Data\**" />
+    <None Remove="Hermes_Models\**" />
+    <None Remove="Hermes_Services\**" />
     <None Remove="Hermes_UITest\**" />
     <None Remove="Hermes_UnitTest\**" />
     <None Remove="Logic\**" />
+    <None Remove="Models\**" />
     <None Remove="Repositories\**" />
   </ItemGroup>
 
@@ -36,8 +52,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="SendGrid" Version="9.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="Hermes_Models\Hermes_Models\Hermes_Models.csproj" />
+    <ProjectReference Include="Hermes_Services\Hermes_Services\Hermes_Services.csproj" />
   </ItemGroup>
 
 </Project>

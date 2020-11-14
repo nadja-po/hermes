@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Hermes_chat.Data.Migrations
+namespace Hermes_Services.Data.Migrations
 {
     public partial class UserAndMessage : Migration
     {

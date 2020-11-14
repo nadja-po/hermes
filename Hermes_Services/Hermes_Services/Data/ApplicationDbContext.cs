@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Hermes_chat.Models;
+using Hermes_Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hermes_chat.Data
+namespace Hermes_Services.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

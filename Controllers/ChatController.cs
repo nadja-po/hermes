@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hermes_chat.Data;
+using Hermes_Services.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Hermes_chat.Models;
+using Hermes_Models;
 
 namespace Hermes_chat.Controllers
 {
