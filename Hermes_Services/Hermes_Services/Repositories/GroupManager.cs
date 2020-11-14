@@ -1,15 +1,11 @@
-﻿using Hermes_Services.Data;
-using Hermes_Models;
-using Hermes_chat.Repositories;
-using Microsoft.AspNetCore.SignalR;
+﻿using Hermes_Models;
+using Hermes_Services.Data;
+using Hermes_Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Hermes_chat.Managers
+namespace Hermes_Services.Repositories
 {
     public class GroupManager 
     {

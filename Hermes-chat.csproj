@@ -12,7 +12,9 @@
     <Compile Remove="Hermes_Services\**" />
     <Compile Remove="Hermes_UITest\**" />
     <Compile Remove="Hermes_UnitTest\**" />
+    <Compile Remove="Hubs\**" />
     <Compile Remove="Logic\**" />
+    <Compile Remove="Managers\**" />
     <Compile Remove="Models\**" />
     <Compile Remove="Repositories\**" />
     <Content Remove="Data\**" />
@@ -20,7 +22,9 @@
     <Content Remove="Hermes_Services\**" />
     <Content Remove="Hermes_UITest\**" />
     <Content Remove="Hermes_UnitTest\**" />
+    <Content Remove="Hubs\**" />
     <Content Remove="Logic\**" />
+    <Content Remove="Managers\**" />
     <Content Remove="Models\**" />
     <Content Remove="Repositories\**" />
     <EmbeddedResource Remove="Data\**" />
@@ -28,7 +32,9 @@
     <EmbeddedResource Remove="Hermes_Services\**" />
     <EmbeddedResource Remove="Hermes_UITest\**" />
     <EmbeddedResource Remove="Hermes_UnitTest\**" />
+    <EmbeddedResource Remove="Hubs\**" />
     <EmbeddedResource Remove="Logic\**" />
+    <EmbeddedResource Remove="Managers\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Repositories\**" />
     <None Remove="Data\**" />
@@ -36,7 +42,9 @@
     <None Remove="Hermes_Services\**" />
     <None Remove="Hermes_UITest\**" />
     <None Remove="Hermes_UnitTest\**" />
+    <None Remove="Hubs\**" />
     <None Remove="Logic\**" />
+    <None Remove="Managers\**" />
     <None Remove="Models\**" />
     <None Remove="Repositories\**" />
   </ItemGroup>

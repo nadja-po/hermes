@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hermes_chat.Services
+namespace Hermes_Models
 {
     public class AuthMessageSenderOptions
     {
