@@ -9,10 +9,14 @@ namespace Hermes_chat.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        //public ApplicationDbContext()
+        //{
+        //}
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,5 +28,8 @@ namespace Hermes_chat.Data
         }
 
         public DbSet<Message> Messages { get; set; }
+        public DbSet<UsersInGroup> UsersInGroup { get; set; }
+
+        public DbSet<Group> Group { get; set; }
     }
 }

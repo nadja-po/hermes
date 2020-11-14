@@ -29,14 +29,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
 
-                    @*<ul class="navbar-nav ml-auto">
-                    @if (Context.User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Chat" asp-action="TestChat">Test Chat</a>
-                        </li>
-                    }
-                </ul>*@
+                    <ul class="navbar-nav ml-auto">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Chat" asp-action="CreateGroup">Create new group</a>
+                </li>
+            }
+        </ul>
 
                 </div>
             </div>
