@@ -1,6 +1,4 @@
-using System;
-
-namespace Hermes_chat.Models
+namespace Hermes_Models
 {
     public class ErrorViewModel
     {

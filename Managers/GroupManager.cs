@@ -1,5 +1,5 @@
-﻿using Hermes_chat.Data;
-using Hermes_chat.Models;
+﻿using Hermes_Services.Data;
+using Hermes_Models;
 using Hermes_chat.Repositories;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;

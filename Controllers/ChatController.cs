@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hermes_chat.Data;
+﻿using Hermes_chat.Managers;
+using Hermes_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Hermes_chat.Models;
-using Hermes_chat.Managers;
-using System.Security.Claims;
+using System.Linq;
 
 namespace Hermes_chat.Controllers
 {
