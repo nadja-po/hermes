@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace Hermes_chat.Hubs
+namespace Hermes_Services
 {
     public class ChatHub : Hub
     {

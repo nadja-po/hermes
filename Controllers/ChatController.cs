@@ -1,4 +1,4 @@
-﻿using Hermes_chat.Managers;
+﻿using Hermes_Services.Repositories;
 using Hermes_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
