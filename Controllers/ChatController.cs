@@ -41,9 +41,16 @@ namespace Hermes_chat.Controllers
             ViewBag.userName = _userManager.GetUserName(User);
             if (ModelState.IsValid)
             {
-                int _id = groupManager.CreateGroup(model.ToData());
-                return RedirectToAction("Groups", "Chat", new {id = _id});
-                
+                if (groupManager.GetByName(model.GroupName) == null)
+                {
+                    int _id = groupManager.CreateGroup(model.ToData());
+                    return RedirectToAction("Groups", "Chat", new { id = _id });
+                }
+                else
+                {
+                    ModelState.AddModelError("GroupName", "This group name is already taken");
+                    return View();
+                }
             }
             else
             {

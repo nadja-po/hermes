@@ -34,6 +34,9 @@ namespace Hermes_Services.Repositories
         {
             chatGroup.CreateGroup(group);
             var id = group.Id;
+            //var creatorId = group.CreatorId;
+            //ICollection<IdentityUser> user = chatGroup.GetUserById(creatorId);
+            //chatGroup.AddUserInGroup(id, user);
             return id;
         }
 
@@ -47,7 +50,19 @@ namespace Hermes_Services.Repositories
             return chatGroup.GetUsersByGroup(groupId);
             throw new NotImplementedException();
         }
+        public Group GetByName(string groupName)
+        {
+            return chatGroup.GetByName(groupName);
+        }
+        //public void AddUserInGroup(int groupId, ICollection<IdentityUser> user)
+        //{
+        //    chatGroup.AddUserInGroup(groupId, user);
+        //}
 
+        //public void DeleteUserIntoGroup(int groupId, IdentityUser user)
+        //{
+        //    chatGroup.DeleteUserIntoGroup(groupId, user);
+        //}
         //public Task AddToGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
         //{
         //    throw new NotImplementedException();
