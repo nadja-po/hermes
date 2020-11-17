@@ -9,6 +9,7 @@ namespace Hermes_Services
 {
     public class ChatHub : Hub
     {
+
         private readonly SignInManager<IdentityUser> _signInManager;
         public ChatHub(SignInManager<IdentityUser> signInManager)
         {

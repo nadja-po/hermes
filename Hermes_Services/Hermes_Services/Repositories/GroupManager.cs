@@ -1,6 +1,7 @@
 ﻿using Hermes_Models;
 using Hermes_Services.Data;
 using Hermes_Services.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,10 @@ namespace Hermes_Services.Repositories
         public int CreateGroup(Group group)
         {
             chatGroup.CreateGroup(group);
-            var id = group.Id;
-            //var creatorId = group.CreatorId;
-            //ICollection<IdentityUser> user = chatGroup.GetUserById(creatorId);
-            //chatGroup.AddUserInGroup(id, user);
-            return id;
+            var groupId = group.Id;
+            var creatorId = group.CreatorId;
+            chatGroup.AddUserInGroup(groupId, creatorId);
+            return groupId;
         }
 
         public void DeleteGroup(int id)
@@ -50,19 +50,30 @@ namespace Hermes_Services.Repositories
             return chatGroup.GetUsersByGroup(groupId);
             throw new NotImplementedException();
         }
+        public int GetNumberUsersInGroup(int groupId)
+        {
+            return chatGroup.GetNumberUsersInGroup(groupId);
+            throw new NotImplementedException();
+        }
+        public UsersInGroup GetUserInGroup(int groupId, string userId)
+        {
+            return chatGroup.GetUserInGroup(groupId, userId);
+            throw new NotImplementedException();
+        }
+
         public Group GetByName(string groupName)
         {
             return chatGroup.GetByName(groupName);
         }
-        //public void AddUserInGroup(int groupId, ICollection<IdentityUser> user)
-        //{
-        //    chatGroup.AddUserInGroup(groupId, user);
-        //}
+        public void AddUserInGroup(int groupId, string userId)
+        {
+            chatGroup.AddUserInGroup(groupId, userId);
+        }
 
-        //public void DeleteUserIntoGroup(int groupId, IdentityUser user)
-        //{
-        //    chatGroup.DeleteUserIntoGroup(groupId, user);
-        //}
+        public void DeleteUserIntoGroup(int groupId, string userId)
+        {
+            chatGroup.DeleteUserIntoGroup(groupId, userId);
+        }
         //public Task AddToGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
         //{
         //    throw new NotImplementedException();

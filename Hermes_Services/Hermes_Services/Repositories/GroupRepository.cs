@@ -30,7 +30,10 @@ namespace Hermes_Services.Repositories
             return this.db.UsersInGroup.Where(n => n.GroupId == groupId).ToList();
 
         }
-
+        public int GetNumberUsersInGroup(int groupId)
+        {
+            return this.db.UsersInGroup.Count(n => n.GroupId == groupId);
+        }
         public Group GetByName(string groupName)
         {
             return this.db.Group.FirstOrDefault(n => n.GroupName == groupName);
@@ -56,23 +59,30 @@ namespace Hermes_Services.Repositories
 
             this.db.SaveChanges();
         }
-        //public void AddUserInGroup(int groupId, int userId)
-        //{
-        //    UsersInGroup userInGroup = new Hermes_Models.UsersInGroup()
-        //    {
-        //        GroupId = groupId,
-        //        UserId = userId,
-        //    };
-        //    this.db.UsersInGroup.Add(userInGroup);
-        //    this.db.SaveChanges();
-        //}
+        public void AddUserInGroup(int groupId, string userId)
+        {
+            UsersInGroup userInGroup = new Hermes_Models.UsersInGroup()
+            {
+                GroupId = groupId,
+                UserId = userId,
+            };
+            this.db.UsersInGroup.Add(userInGroup);
+            this.db.SaveChanges();
 
-        //public void DeleteUserIntoGroup(int groupId, int userId)
-        //{
-        //    var user = this.db.UsersInGroup.Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
-        //    this.db.UsersInGroup.Remove(user);
-        //    this.db.SaveChanges();
-        //}
+        }
+
+        public void DeleteUserIntoGroup(int groupId, string userId)
+        {
+            var user = this.db.UsersInGroup.Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
+            this.db.UsersInGroup.Remove(user);
+            this.db.SaveChanges();
+        }
+        public UsersInGroup GetUserInGroup(int groupId, string userId)
+        {
+            var user = this.db.UsersInGroup.Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
+            return user;
+        }
     }
+
 }
     

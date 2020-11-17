@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hermes_Models
@@ -18,10 +19,10 @@ namespace Hermes_Models
 
         public Group()
         {
-            Users = new HashSet<UsersInGroup>();
+            Users = new HashSet<IdentityUser>();
         }
 
-        public virtual ICollection<UsersInGroup> Users { get; set; }
+        public virtual ICollection<IdentityUser> Users { get; set; }
 
         public Group ToData()
         {
