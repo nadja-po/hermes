@@ -74,6 +74,7 @@ namespace Hermes_Services.Repositories
         {
             chatGroup.DeleteUserIntoGroup(groupId, userId);
         }
+
         //public Task AddToGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
         //{
         //    throw new NotImplementedException();

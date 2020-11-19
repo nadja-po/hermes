@@ -30,6 +30,12 @@ namespace Hermes_Services.Repositories
             return this.db.UsersInGroup.Where(n => n.GroupId == groupId).ToList();
 
         }
+        public List<UsersInGroup> GetGroupByUser(string userId)
+        {
+            return this.db.UsersInGroup.Where(n => n.UserId == userId).ToList();
+        }
+
+
         public int GetNumberUsersInGroup(int groupId)
         {
             return this.db.UsersInGroup.Count(n => n.GroupId == groupId);

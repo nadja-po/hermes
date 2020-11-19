@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Hermes_Services.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hermes_Services
 {
+    [Authorize]
     public class ChatHub : Hub
     {
 
         private readonly SignInManager<IdentityUser> _signInManager;
-        public ChatHub(SignInManager<IdentityUser> signInManager)
+        private readonly ApplicationDbContext db;
+
+        public ChatHub(SignInManager<IdentityUser> signInManager, ApplicationDbContext db)
         {
             _signInManager = signInManager;
+            this.db = db;
         }
         
         public async Task SendMessage(string message)
@@ -29,7 +35,7 @@ namespace Hermes_Services
             
             var signin = _signInManager.Context.User.Identity.Name;
             if (Context.UserIdentifier != user)
-                await Clients.User(Context.UserIdentifier).SendAsync("ReceiveMessage", signin, message);
+            await Clients.User(Context.UserIdentifier).SendAsync("ReceiveMessage", signin, message);
             await Clients.User(user).SendAsync("ReceiveMessage", signin, message);
 
         }
@@ -37,8 +43,8 @@ namespace Hermes_Services
         //Notification function for incoming and outgoing users
         public override async Task OnConnectedAsync()
         {
-                await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} entered the chat");
-                await base.OnConnectedAsync();
+            await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} entered the chat");
+            await base.OnConnectedAsync();
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {

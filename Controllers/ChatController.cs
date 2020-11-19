@@ -68,11 +68,15 @@ namespace Hermes_chat.Controllers
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var users = groupManager.GetUsersByGroup(id.Value);
                 var numberUsers = groupManager.GetNumberUsersInGroup(id.Value);
+                var user = _userManager.GetUserId(User);
+                var userInGroup = groupManager.GetUserInGroup(activeGroup.Id, user);
                 ViewBag.Group = activeGroup.GroupName;
                 ViewBag.GroupId = activeGroup.Id;
                 ViewBag.userName = _userManager.GetUserName(User);
                 ViewBag.Users = users;
                 ViewBag.numberUsers = numberUsers;
+                //ViewBag.user = user;
+                ViewBag.userInGroup = userInGroup;
             }
 
             return View(_userManager.Users.ToList());
