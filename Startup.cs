@@ -83,6 +83,7 @@ namespace Hermes_chat
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chathub");
             });
+
         }
     }
 }

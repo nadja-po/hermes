@@ -15,8 +15,9 @@
         <input asp-for="CreatorId" type="hidden" name="CreatorId" id="CreatorId" value="@ViewBag.CreatorId" />
         <input asp-for="Users" type="hidden" name="userName" id="userName" value="@ViewBag.userName" />
 
-        <button type="submit" class="btn btn-primary">Create group</button>
-        
+        <div class="col-12 col-md-4"><input type="submit" id="joinButton" value="Create group" class="btn btn-primary" /></div>
+        @*<button type="submit" class="btn btn-primary">Create group</button>*@
+
     </form>
 
 

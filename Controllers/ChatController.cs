@@ -23,7 +23,7 @@ namespace Hermes_chat.Controllers
             return View(_userManager.Users.ToList());
         }
 
-        public IActionResult Users(string userName)  
+        public IActionResult Users(string userName)
         {
             ViewBag.name = userName;
             return View();
@@ -41,9 +41,16 @@ namespace Hermes_chat.Controllers
             ViewBag.userName = _userManager.GetUserName(User);
             if (ModelState.IsValid)
             {
-                int _id = groupManager.CreateGroup(model.ToData());
-                return RedirectToAction("Groups", "Chat", new {id = _id});
-                
+                if (groupManager.GetByName(model.GroupName) == null)
+                {
+                    int _id = groupManager.CreateGroup(model.ToData());
+                    return RedirectToAction("Groups", "Chat", new { id = _id });
+                }
+                else
+                {
+                    ModelState.AddModelError("GroupName", "This group name is already taken");
+                    return View();
+                }
             }
             else
             {
@@ -59,19 +66,48 @@ namespace Hermes_chat.Controllers
             if (id.HasValue)
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
-                //var users = groupManager.GetUsersByGroup(id.Value);
+                var users = groupManager.GetUsersByGroup(id.Value);
+                var numberUsers = groupManager.GetNumberUsersInGroup(id.Value);
+                var user = _userManager.GetUserId(User);
+                var userInGroup = groupManager.GetUserInGroup(activeGroup.Id, user);
                 ViewBag.Group = activeGroup.GroupName;
+                ViewBag.GroupId = activeGroup.Id;
                 ViewBag.userName = _userManager.GetUserName(User);
-                //ViewBag.Users = users;
+                ViewBag.Users = users;
+                ViewBag.numberUsers = numberUsers;
+                //ViewBag.user = user;
+                ViewBag.userInGroup = userInGroup;
             }
-            
+
             return View(_userManager.Users.ToList());
         }
 
-        //public IActionResult TestChat()
-        //{
-        //    return View();
-        //}
+        public IActionResult JoinGroup(int id)
+        {
 
+            var user = _userManager.GetUserId(User);
+            if (groupManager.GetUserInGroup(id, user) == null)
+            {
+                groupManager.AddUserInGroup(id, user);
+                return RedirectToAction("Groups", "Chat", new { id });
+            }
+            else
+            {
+                ModelState.AddModelError("JoinGroup", "You already joined");
+                return RedirectToAction("Groups", "Chat", new { id });
+            }
+
+        }
+        public IActionResult LeaveGroup(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            groupManager.DeleteUserIntoGroup(id, userId);
+            int numberUsers = groupManager.GetNumberUsersInGroup(id); 
+            if(numberUsers == 0)
+            {
+                groupManager.DeleteGroup(id);
+            }
+            return RedirectToAction(nameof(ChatUsers));
+        }
     }
 }
