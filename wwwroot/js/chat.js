@@ -7,8 +7,9 @@ document.getElementById("sendButton").disabled = true;
 
 //receiving messages
 connection.on("ReceiveMessage", function (user, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var encodedMsg = user + " says: " + msg;
+    //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    //var encodedMsg = user + " says: " + msg;
+    var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
     document.getElementById("messagesList").appendChild(li);
@@ -41,9 +42,12 @@ if (document.getElementById("mainChat").value == 1) {
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
-        connection.invoke("SendMessage", message).catch(function (err) {
-            return console.error(err.toString());
-        });
+      
+        if (message != "") {
+            connection.invoke("SendMessage", message).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
         event.preventDefault();
         document.getElementById("messageInput").value = "";
     });
@@ -62,9 +66,11 @@ else if (document.getElementById("mainChat").value == 0) {
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
         var user = document.getElementById("userName").value;
+        if (message != "") {
         connection.invoke("SendMessageUser", user, message).catch(function (err) {
             return console.error(err.toString());
         });
+        }
         event.preventDefault();
         document.getElementById("messageInput").value = "";
     });
@@ -83,9 +89,11 @@ else if (document.getElementById("mainChat").value == 3)
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
         var groupName = document.getElementById("groupName").value;
+        if (message != "") {
         connection.invoke("SendMessageGroup", message, groupName).catch(function (err) {
             return console.error(err.toString());
         });
+        }
         event.preventDefault();
         document.getElementById("messageInput").value = "";
     });

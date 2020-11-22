@@ -5,52 +5,49 @@
 
 @if (Context.User.Identity.IsAuthenticated)
 {
-    <input type="hidden" id="mainChat" value="1" />
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
-                <ul class="list-unstyled" id="messagesList"></ul>
-            </div>
-            <div class="row">&nbsp;</div>
-
-            <div class="row">
-                
-                <form class="col-12 col-md-10">
-                    <div><input type="text" id="messageInput" class="form-control" /></div>
-                    <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
-                </form>
-            </div>
-            <div class="row">&nbsp;</div> 
+<input type="hidden" id="mainChat" value="1" />
+<div class="row">
+    <div class="col-12 col-md-8">
+        <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
+            <ul class="list-unstyled" id="messagesList"></ul>
         </div>
-        <div class="col-12 col-md-2">
-            <p>Сhoose a chat room:</p>
-            <div class="list-group">
-                @foreach (var group in @ViewBag.Groups)
-                {
-                    <a type="button" class="list-group-item list-group-item-action"
-                       asp-controller="Chat" asp-action="Groups" asp-route-id="@group.Id">
-                        @group.GroupName
-                    </a>
-                }
-            </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <form class="col-12 col-md-12">
+                <div><input type="text" id="messageInput" class="form-control" /></div>
+                <div class="row">&nbsp;</div>
+                <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+            </form>
         </div>
-        <div class="col-12 col-md-2">
-            <p>Click on a user to start a private chat:</p>
-            <div class="list-group">
-                @foreach (var user in Model)
+        <div>&nbsp;</div>
+    </div>
+    <div class="col-12 col-md-2">
+        <p>Сhoose a chat room:</p>
+        <div class="list-group">
+            @foreach (var group in @ViewBag.Groups)
                 {
-                    <a type="button" class="list-group-item list-group-item-action"
-                       asp-controller="Chat" asp-action="Users" asp-route-userName="@user.UserName">
-                        @user.UserName
-                    </a>
+            <a type="button" class="list-group-item list-group-item-action"
+               asp-controller="Chat" asp-action="Groups" asp-route-id="@group.Id">
+                @group.GroupName
+            </a>
                 }
-            </div>
         </div>
     </div>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
-    <script>
-
-       
-    </script>
+    <div class="col-12 col-md-2">
+        <p>Click on user to send a private message:</p>
+        <div class="list-group">
+            @foreach (var user in Model)
+                {
+            <a type="button" class="list-group-item list-group-item-action"
+               asp-controller="Chat" asp-action="Users" asp-route-userName="@user.UserName">
+                @user.UserName
+            </a>
+                }
+        </div>
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+<script>
+</script>
 }

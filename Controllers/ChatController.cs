@@ -35,15 +35,15 @@ namespace Hermes_chat.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateGroup(Group model)
+        public IActionResult CreateGroup(string groupName)
         {
-            ViewBag.CreatorId = _userManager.GetUserId(User);
-            ViewBag.userName = _userManager.GetUserName(User);
+            var creatorId = _userManager.GetUserId(User);
+            Group group = new Group { CreatorId = creatorId, GroupName = groupName };
             if (ModelState.IsValid)
             {
-                if (groupManager.GetByName(model.GroupName) == null)
+                if (groupManager.GetByName(groupName) == null)
                 {
-                    int _id = groupManager.CreateGroup(model.ToData());
+                    int _id = groupManager.CreateGroup(group.ToData());
                     return RedirectToAction("Groups", "Chat", new { id = _id });
                 }
                 else
