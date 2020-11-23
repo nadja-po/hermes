@@ -15,6 +15,15 @@ connection.on("ReceiveMessage", function (user, message) {
     document.getElementById("messagesList").appendChild(li);
 });
 
+connection.on("ReceiveMessageUser", function (url) {
+    var link = document.createElement('a');//create link
+    link.setAttribute('href', url);//set href
+    link.innerHTML = url;//set text to be seen
+    document.body.appendChild(link);
+    document.getElementById("messagesList").appendChild(link);
+});
+
+
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     var groupName = document.getElementById("groupName").value;
@@ -26,6 +35,14 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
     
+});
+
+connection.on('NotifyUser', function (message) {
+    let notifyElem = document.createElement("b");
+    notifyElem.appendChild(document.createTextNode(message));
+    let elem = document.createElement("p");
+    elem.appendChild(notifyElem);
+    document.getElementById("messagesList").appendChild(elem);
 });
 
 //sending messages to the main chat:
