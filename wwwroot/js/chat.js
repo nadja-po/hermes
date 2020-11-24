@@ -12,7 +12,10 @@ connection.on("ReceiveMessage", function (user, message) {
     var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
-    document.getElementById("messagesList").appendChild(li);
+    //document.getElementById("chatContainer").appendChild(li);
+    chatBubble(user, message);
+    var container = document.getElementById("chatContainer");
+    container.scrollTop = container.scrollHeight;
 });
 
 connection.on("ReceiveMessageUser", function (url) {
@@ -54,7 +57,10 @@ if (document.getElementById("mainChat").value == 1) {
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        document.getElementById("messagesList").appendChild(elem);
+        //document.getElementById("chatContainer").appendChild(elem);
+        chatBubble(user, message);
+        var container = document.getElementById("chatContainer");
+        container.scrollTop = container.scrollHeight;
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
