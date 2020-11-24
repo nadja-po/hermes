@@ -12,7 +12,6 @@ namespace Hermes_chat.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private GroupManager groupManager = new GroupManager();
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IHubContext<ChatHub> _hubContext;
         public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext)
         {
@@ -22,7 +21,7 @@ namespace Hermes_chat.Controllers
 
         public IActionResult ChatUsers()
         {
-            ViewBag.Groups = groupManager.GetAllGroups();
+            ViewBag.Groups = groupManager.GetAllGroups().Where(g => g.ModeratorId != null);
             ViewBag.user = _userManager.GetUserName(User);
             return View(_userManager.Users.ToList());
         }
@@ -86,7 +85,7 @@ namespace Hermes_chat.Controllers
         public IActionResult CreateGroup(string groupName)
         {
             var creatorId = _userManager.GetUserId(User);
-            Group group = new Group { CreatorId = creatorId, GroupName = groupName };
+            Group group = new Group { CreatorId = creatorId, GroupName = groupName, ModeratorId = creatorId };
             if (ModelState.IsValid)
             {
                 if (groupManager.GetByName(groupName) == null)
