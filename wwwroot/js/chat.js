@@ -23,10 +23,7 @@ connection.on("ReceiveMessageUser", function (url) {
     link.setAttribute('href', url);//set href
     link.innerHTML = url;//set text to be seen
     document.body.appendChild(link);
-    //document.getElementById("chatContainer").appendChild(elem);
-    chatBubble(url);
-    var container = document.getElementById("chatContainer");
-    container.scrollTop = container.scrollHeight;
+    document.getElementById("messagesList").appendChild(link);
 });
 
 
@@ -48,10 +45,7 @@ connection.on('NotifyUser', function (message) {
     notifyElem.appendChild(document.createTextNode(message));
     let elem = document.createElement("p");
     elem.appendChild(notifyElem);
-    //document.getElementById("chatContainer").appendChild(elem);
-    chatBubble(user, message);
-    var container = document.getElementById("chatContainer");
-    container.scrollTop = container.scrollHeight;
+    document.getElementById("messagesList").appendChild(elem);
 });
 
 //sending messages to the main chat:
@@ -89,10 +83,7 @@ else if (document.getElementById("mainChat").value == 0) {
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        //document.getElementById("chatContainer").appendChild(elem);
-        chatBubble(user, message);
-        var container = document.getElementById("chatContainer");
-        container.scrollTop = container.scrollHeight;
+        document.getElementById("messagesList").appendChild(elem);
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
@@ -116,10 +107,7 @@ else if (document.getElementById("mainChat").value == 3)
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        //document.getElementById("chatContainer").appendChild(elem);
-        chatBubble(user, message);
-        var container = document.getElementById("chatContainer");
-        container.scrollTop = container.scrollHeight;
+        document.getElementById("messagesList").appendChild(elem);
     });
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
