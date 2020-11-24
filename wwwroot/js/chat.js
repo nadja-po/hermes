@@ -115,6 +115,16 @@ else if (document.getElementById("mainChat").value == 3)
         document.getElementById("messageInput").value = "";
     });
 }
+
+function chatBubble(user, message) {
+    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var encodedMsg = user + " says: " + msg;
+    var div = document.createElement("div");
+    div.classList = "talk-bubble";
+    div.innerHTML = "<div class='talktext'>" + encodedMsg + "</div>";
+    document.getElementById("chatContainer").appendChild(div);
+
+}
 ////join chat
 //document.getElementById("joinButton").addEventListener("click", function (event) {
 //    var groupName = document.getElementById("groupName").value;
