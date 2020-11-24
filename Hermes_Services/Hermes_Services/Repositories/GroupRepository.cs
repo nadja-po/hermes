@@ -2,93 +2,63 @@
 using System.Linq;
 using Hermes_Services.Data;
 using Hermes_Models;
-using Microsoft.AspNetCore.Identity;
+using Hermes_Interfaces;
 
 namespace Hermes_Services.Repositories
 {
 
-    public class GroupRepository
+    public class GroupRepository : IRepository<Group>
     {
-        private readonly ApplicationDbContext db;
+        private readonly ApplicationDbContext _db;
 
-        public GroupRepository(ApplicationDbContext db)
+        public GroupRepository(ApplicationDbContext db) 
         {
-            this.db = db;
+            _db = db;
         }
 
-        public Group Get(int id)
+        IEnumerable<Group> IRepository<Group>.GetAll => throw new System.NotImplementedException();
+
+        public void Add(Group entity)
         {
-            return this.db.Group.FirstOrDefault(n => n.Id == id);
+            _db.Group.Add(entity);
+            _db.SaveChanges();
         }
 
-        public List<Group> GetAllGroups()
+        public void Delete(Group entity)
         {
-            return this.db.Group.ToList();
-        }
-        public List<UsersInGroup> GetUsersByGroup(int groupId)
-        {
-            return this.db.UsersInGroup.Where(n => n.GroupId == groupId).ToList();
-
-        }
-        public List<UsersInGroup> GetGroupByUser(string userId)
-        {
-            return this.db.UsersInGroup.Where(n => n.UserId == userId).ToList();
+            _db.Group.Remove(entity);
+            _db.SaveChanges();
         }
 
-
-        public int GetNumberUsersInGroup(int groupId)
+        public void Update(Group entity)
         {
-            return this.db.UsersInGroup.Count(n => n.GroupId == groupId);
-        }
-        public Group GetByName(string groupName)
-        {
-            return this.db.Group.FirstOrDefault(n => n.GroupName == groupName);
+            _db.Group.Update(entity);
+            _db.SaveChanges();
         }
 
-        public IdentityUser GetUserById(string id)
+        public Group GetById(int? Id)
         {
-            return this.db.Users.FirstOrDefault(n => n.Id == id);
+            var result = _db.Group.FirstOrDefault( x => x.Id == Id);
+            return result;
         }
 
-        public int CreateGroup(Group group)
+        public IEnumerable<Group> GetAll()
         {
-            this.db.Group.Add(group);
-            this.db.SaveChanges();
-            var id = group.Id;
-            return id;
-        }
-
-        public void DeleteGroup(int id)
-        {
-            var group = this.db.Group.FirstOrDefault(t => t.Id == id);
-            this.db.Group.Remove(group);
-
-            this.db.SaveChanges();
-        }
-        public void AddUserInGroup(int groupId, string userId)
-        {
-            UsersInGroup userInGroup = new Hermes_Models.UsersInGroup()
+            var result = _db.Group.ToList<Group>();
+            if (result.Count() > 0)
             {
-                GroupId = groupId,
-                UserId = userId,
-            };
-            this.db.UsersInGroup.Add(userInGroup);
-            this.db.SaveChanges();
-
+                return result;
+            }
+            else
+            {
+                return new List<Group>(); 
+            }
         }
 
-        public void DeleteUserIntoGroup(int groupId, string userId)
+        public Group GetById(string Id)
         {
-            var user = this.db.UsersInGroup.Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
-            this.db.UsersInGroup.Remove(user);
-            this.db.SaveChanges();
-        }
-        public UsersInGroup GetUserInGroup(int groupId, string userId)
-        {
-            var user = this.db.UsersInGroup.Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
-            return user;
+            throw new System.NotImplementedException();
         }
     }
-
 }
     

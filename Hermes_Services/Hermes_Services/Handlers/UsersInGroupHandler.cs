@@ -1,0 +1,73 @@
+﻿using System.Linq;
+using Hermes_Services.Repositories;
+using Hermes_Models;
+using System.Collections.Generic;
+using Hermes_Services.Data;
+
+namespace Hermes_Services.Handler
+{
+
+    public class UsersInGroupHandler
+    {
+        private UsersInGroupRepository _repository;
+
+        public UsersInGroupHandler(ApplicationDbContext db)
+        {
+            _repository = new UsersInGroupRepository(db);
+        }
+
+        public List<UsersInGroup> GetUsersByGroup(int groupId)
+        {
+            return _repository.GetAll().Where(x=>x.GroupId == groupId).ToList();
+        }
+
+        public List<UsersInGroup> GetGroupByUser(string userId)
+        {
+            return _repository.GetAll().Where(x => x.UserId == userId).ToList();
+        }
+
+        //public IdentityUser GetUserById(string id)
+        //{
+        //    return this.db.Users.FirstOrDefault(n => n.Id == id);
+        //}
+
+        public int Create(UsersInGroup userInGroup)
+        {
+            _repository.Add(userInGroup);
+            return userInGroup.Id;
+        }
+
+        public void Delete(UsersInGroup userInGroup)
+        {
+            _repository.Delete(userInGroup);
+        }
+
+        public void AddUserInGroup(int groupId, string userId)
+        {
+            UsersInGroup userInGroup = new UsersInGroup()
+            {
+                GroupId = groupId,
+                UserId = userId,
+            };
+            _repository.Add(userInGroup);
+
+        }
+
+        public void DeleteUserIntoGroup(int groupId, string userId)
+        {
+            var userInGroup = _repository.GetAll().Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
+            _repository.Delete(userInGroup);
+        }
+
+        public UsersInGroup GetUserInGroup(int groupId, string userId)
+        {
+            return _repository.GetAll().Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
+        }
+
+        public List<UsersInGroup> GetAll()
+        {
+            return _repository.GetAll().ToList();
+        }
+    }
+
+}

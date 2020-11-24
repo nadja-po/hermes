@@ -1,4 +1,4 @@
-﻿using Hermes_Services.Repositories;
+﻿using Hermes_Services.Handlers;
 using Hermes_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +43,7 @@ namespace Hermes_chat.Controllers
             {
                 if (groupManager.GetByName(model.GroupName) == null)
                 {
-                    int _id = groupManager.CreateGroup(model.ToData());
+                    int _id = groupManager.CreateGroup(model);
                     return RedirectToAction("Groups", "Chat", new { id = _id });
                 }
                 else
@@ -105,7 +105,7 @@ namespace Hermes_chat.Controllers
             int numberUsers = groupManager.GetNumberUsersInGroup(id); 
             if(numberUsers == 0)
             {
-                groupManager.DeleteGroup(id);
+                groupManager.Delete(groupManager.Get(id));
             }
             return RedirectToAction(nameof(ChatUsers));
         }
