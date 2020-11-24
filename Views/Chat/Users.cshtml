@@ -5,32 +5,71 @@
 
 @if (Context.User.Identity.IsAuthenticated)
 {
-    <input type="hidden" id="mainChat" value="0" />
-    <div class="row">
-        <div class="col-12 col-md-10">
-            <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
-                <ul class="list-unstyled" id="messagesList"></ul>
-            </div>
-            <div class="row">&nbsp;</div>
-
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    Message to @ViewBag.name
-                    <input type="hidden" id="userName" value="@ViewBag.name" />
-                    <p></p>
+    @if (Context.User.Identity.Name == ViewBag.user)
+    {
+        <input type="hidden" id="mainChat" value="3" />
+        <div class="row">
+            <div class="col-12 col-md-10">
+                <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
+                    <ul class="list-unstyled" id="messagesList"></ul>
                 </div>
-            </div>
-            <div class="row">
-                <form class="col-12 col-md-12">
-                    <div><input type="text" id="messageInput" class="form-control" /></div>
-                    <div class="row">&nbsp;</div>
-                    <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
-                </form>
-            </div>
+                <div class="row">&nbsp;</div>
+
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        Message to @ViewBag.creator
+                        <input type="hidden" id="groupName" value="@ViewBag.group" />
+                        <p></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <form class="col-12 col-md-12">
+                        <div><input type="text" id="messageInput" class="form-control" /></div>
+                        <div class="row">&nbsp;</div>
+                        <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+                    </form>
+                </div>
             </div>
             <div class="row">&nbsp;</div>
         </div>
+    }
+    else if (Context.User.Identity.Name == ViewBag.creator)
+    {
+        <input type="hidden" id="mainChat" value="3" />
+        <div class="row">
+            <div class="col-12 col-md-10">
+                <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
+                    <ul class="list-unstyled" id="messagesList"></ul>
+                </div>
+                <div class="row">&nbsp;</div>
 
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        Message to @ViewBag.user
+                        <input type="hidden" id="groupName" value="@ViewBag.group" />
+                        <p></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <form class="col-12 col-md-12">
+                        <div><input type="text" id="messageInput" class="form-control" /></div>
+                        <div class="row">&nbsp;</div>
+                        <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+        </div>
+    }
+    else
+    {
+<div class="text-center">
+
+    <h1>You don't have access to this room!</h1>
+    <img src="~/Resources/imposter.jpg" />
+
+</div>
+    }
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
 }

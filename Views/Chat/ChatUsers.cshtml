@@ -39,7 +39,7 @@
             @foreach (var user in Model)
                 {
             <a type="button" class="list-group-item list-group-item-action"
-               asp-controller="Chat" asp-action="Users" asp-route-userName="@user.UserName">
+               asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
                 @user.UserName
             </a>
                 }

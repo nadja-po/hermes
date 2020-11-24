@@ -3,6 +3,8 @@ using Hermes_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using Microsoft.AspNetCore.SignalR;
+using Hermes_Services;
 
 namespace Hermes_chat.Controllers
 {
@@ -11,22 +13,68 @@ namespace Hermes_chat.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private GroupManager groupManager = new GroupManager();
         private readonly SignInManager<IdentityUser> _signInManager;
-        public ChatController(UserManager<IdentityUser> userManager)
+        private readonly IHubContext<ChatHub> _hubContext;
+        public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext)
         {
             _userManager = userManager;
+            _hubContext = hubContext;
         }
 
         public IActionResult ChatUsers()
         {
             ViewBag.Groups = groupManager.GetAllGroups();
-
+            ViewBag.user = _userManager.GetUserName(User);
             return View(_userManager.Users.ToList());
         }
 
-        public IActionResult Users(string userName)
+        [HttpGet]
+        public IActionResult Users(int? id, string userName)
         {
-            ViewBag.name = userName;
+            var groups = groupManager.GetAllGroups();
+            if (id.HasValue)
+            {
+                var activeGroup = groups.FirstOrDefault(g => g.Id == id);
+                var creatorId = activeGroup.CreatorId;
+                var creatorName = _userManager.Users.FirstOrDefault(g => g.Id == creatorId).UserName;
+                ViewBag.creator = creatorName;
+                ViewBag.user = userName;
+                ViewBag.group = activeGroup.GroupName;
+            }
+
             return View();
+        }
+
+        public IActionResult UserPrivateChat(string userName)
+        {
+            var name = userName;
+            var creatorId = _userManager.GetUserId(User);
+            string user = _userManager.GetUserName(User);
+            string groupName = userName + user;
+            Group group = new Group { CreatorId = creatorId, GroupName = groupName };
+            if (ModelState.IsValid)
+            {
+                if (groupManager.GetByName(groupName) == null)
+                {
+                    int _id = groupManager.CreateGroup(group.ToData());
+                    string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessage", user, "You were invited to a private chat: ");
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessageUser", url);
+                    return RedirectToAction("Users", "Chat", new { id = _id, userName = name });
+                }
+                else
+                {
+                    var group1 = groupManager.GetByName(groupName);
+                    int _id = group1.Id;
+                    string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessage", user, "You were invited to a private chat: ");
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessageUser", url);
+                    return RedirectToAction("Users", "Chat", new { id = _id, userName = name });
+                }
+            }
+            else
+            {
+                return RedirectToAction(nameof(ChatUsers));
+            }
         }
 
         [HttpGet]
