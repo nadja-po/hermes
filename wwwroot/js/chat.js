@@ -22,7 +22,11 @@ connection.on("ReceiveMessageUser", function (url) {
     document.body.appendChild(link);
     document.getElementById("messagesList").appendChild(link);
 });
-
+connection.on("ReceiveMessageNotify", function (message) {
+    var li = document.createElement("li");
+    li.textContent = message;
+    document.getElementById("messagesList").appendChild(li);
+});
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;

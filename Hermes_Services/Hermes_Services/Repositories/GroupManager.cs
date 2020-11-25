@@ -75,14 +75,15 @@ namespace Hermes_Services.Repositories
             chatGroup.DeleteUserIntoGroup(groupId, userId);
         }
 
-        //public Task AddToGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public void ChangeModeratorInGroup(int groupId, string nextModeratorId)
+        {
+            chatGroup.ChangeModeratorInGroup(groupId, nextModeratorId);
+        }
 
-        //public Task RemoveFromGroupAsync(string connectionId, string groupName, CancellationToken cancellationToken = default)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public UsersInGroup GetUserInGroupBiId(int id)
+        {
+            return chatGroup.GetUserInGroupBiId(id);
+            throw new NotImplementedException();
+        }
     }
 }
