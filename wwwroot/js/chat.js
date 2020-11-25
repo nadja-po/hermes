@@ -7,13 +7,22 @@ document.getElementById("sendButton").disabled = true;
 
 //receiving messages
 connection.on("ReceiveMessage", function (user, message) {
+<<<<<<< Updated upstream
     //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+=======
+>>>>>>> Stashed changes
     var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
     chatBubble(user, message);
     var container = document.getElementById("chatContainer");
     container.scrollTop = container.scrollHeight;
+});
+connection.on("ReceiveMessageGroup", function (user, message) {
+    var encodedMsg = user + " says: " + message;
+    var li = document.createElement("li");
+    li.textContent = encodedMsg;
+    document.getElementById("messagesListGroup").appendChild(li);
 });
 
 connection.on("ReceiveMessageUser", function (url) {

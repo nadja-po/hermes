@@ -68,7 +68,7 @@ namespace Hermes_Services
         public async Task SendMessageGroup(string message, string groupName)
         {
             var signin = _signInManager.Context.User.Identity.Name;
-            await Clients.Group(groupName).SendAsync("ReceiveMessage", signin, message).ConfigureAwait(true);
+            await Clients.Group(groupName).SendAsync("ReceiveMessageGroup", signin, message).ConfigureAwait(true);
         }
         
     }
