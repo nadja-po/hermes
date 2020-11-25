@@ -43,7 +43,7 @@ namespace Hermes_Services
         //Notification function for incoming and outgoing users
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} entered the chat");
+            await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} joined the chat");
             await base.OnConnectedAsync();
         }
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -56,13 +56,13 @@ namespace Hermes_Services
         public async Task JoinGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            await Clients.Group(groupName).SendAsync("Notify", $"{ Context.UserIdentifier} added to group");
+            await Clients.Group(groupName).SendAsync("Notify", $"{ Context.UserIdentifier} joined the group");
         }
 
         public async Task LeaveGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-            await Clients.Group(groupName).SendAsync(Context.UserIdentifier + " left group");
+            await Clients.Group(groupName).SendAsync(Context.UserIdentifier + " left the group");
         }
 
         public async Task SendMessageGroup(string message, string groupName)

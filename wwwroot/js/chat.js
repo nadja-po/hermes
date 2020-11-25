@@ -8,11 +8,9 @@ document.getElementById("sendButton").disabled = true;
 //receiving messages
 connection.on("ReceiveMessage", function (user, message) {
     //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    //var encodedMsg = user + " says: " + msg;
     var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
-    //document.getElementById("chatContainer").appendChild(li);
     chatBubble(user, message);
     var container = document.getElementById("chatContainer");
     container.scrollTop = container.scrollHeight;
@@ -23,7 +21,7 @@ connection.on("ReceiveMessageUser", function (url) {
     link.setAttribute('href', url);//set href
     link.innerHTML = url;//set text to be seen
     document.body.appendChild(link);
-    document.getElementById("messagesList").appendChild(link);
+    document.getElementById("chatContainer").appendChild(link);
 });
 
 
@@ -45,7 +43,7 @@ connection.on('NotifyUser', function (message) {
     notifyElem.appendChild(document.createTextNode(message));
     let elem = document.createElement("p");
     elem.appendChild(notifyElem);
-    document.getElementById("messagesList").appendChild(elem);
+    document.getElementById("chatContainer").appendChild(elem);
 });
 
 //sending messages to the main chat:
@@ -57,7 +55,6 @@ if (document.getElementById("mainChat").value == 1) {
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        //document.getElementById("chatContainer").appendChild(elem);
         chatBubble(user, message);
         var container = document.getElementById("chatContainer");
         container.scrollTop = container.scrollHeight;
@@ -83,7 +80,7 @@ else if (document.getElementById("mainChat").value == 0) {
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        document.getElementById("messagesList").appendChild(elem);
+        document.getElementById("chatContainer").appendChild(elem);
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
@@ -107,7 +104,7 @@ else if (document.getElementById("mainChat").value == 3)
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        document.getElementById("messagesList").appendChild(elem);
+        document.getElementById("chatContainer").appendChild(elem);
     });
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
@@ -123,8 +120,7 @@ else if (document.getElementById("mainChat").value == 3)
 }
 
 function chatBubble(user, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var encodedMsg = user + " says: " + msg;
+    var encodedMsg = user + " says: " + message;
     var div = document.createElement("div");
     div.classList = "talk-bubble";
     div.innerHTML = "<div class='talktext'>" + encodedMsg + "</div>";
