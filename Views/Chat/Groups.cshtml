@@ -24,9 +24,8 @@
             <a class="nav-link text-dark" asp-controller="Chat" asp-action="LeaveGroup" asp-route-id="@ViewBag.GroupId">Leave Group</a>
 
             <div class="row">
-                <div class="col-12 col-md-9">
-                    <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="border:1px solid #cecece; height: 300px">
-                        <ul class="list-unstyled" id="messagesList"></ul>
+                <div class="col-12 col-md-10">
+                    <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainer" style="border:1px solid #cecece; height: 300px">
                     </div>
                     <div class="row">&nbsp;</div>
                     <div class="row">
@@ -47,27 +46,27 @@
                 </div>
                 @*There are @ViewBag.numberUsers users*@
                 @*<div class="col-12 col-md-3">
-                        <p>Users in this group:</p>
-                        <div class="list-group">
-                            @foreach (var user in ViewBag.Users)
-                            {
-                                <a class="list-group-item list-group-item-action">
-                                    @user.Name
-                                </a>
-                            }
-                        </div>
-                    </div>*@
+            <p>Users in this group:</p>
+            <div class="list-group">
+                @foreach (var user in ViewBag.Users)
+                {
+                    <a class="list-group-item list-group-item-action">
+                        @user.Name
+                    </a>
+                }
+            </div>
+        </div>*@
                 <!--</div>-->
                 @*<div class="col-12 col-md-3">
-                        <p>Add new user in the group:</p>
-                        <div class="list-group">
-                            @foreach (var user in Model)
-                            {
-                                <input type="hidden" id="groupName" value="@ViewBag.group" />
-                                <div><input type="button" class="list-group-item list-group-item-action" id="joinButton" value="@user.UserName" /></div>
-                            }
-                        </div>
-                    </div>*@
+            <p>Add new user in the group:</p>
+            <div class="list-group">
+                @foreach (var user in Model)
+                {
+                    <input type="hidden" id="groupName" value="@ViewBag.group" />
+                    <div><input type="button" class="list-group-item list-group-item-action" id="joinButton" value="@user.UserName" /></div>
+                }
+            </div>
+        </div>*@
             </div>
     }
             <script src="~/js/signalr/dist/browser/signalr.js"></script>
