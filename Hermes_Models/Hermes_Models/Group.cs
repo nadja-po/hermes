@@ -32,6 +32,7 @@ namespace Hermes_Models
                 Id = this.Id,
                 GroupName = this.GroupName,
                 CreatorId = this.CreatorId,
+                ModeratorId = this.ModeratorId,
             };
         }
         public static Group FromData(Group data)
@@ -41,6 +42,7 @@ namespace Hermes_Models
                 Id = data.Id,
                 GroupName = data.GroupName,
                 CreatorId = data.CreatorId,
+                ModeratorId = data.ModeratorId,
             };
         }
     }
