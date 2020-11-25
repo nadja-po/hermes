@@ -21,6 +21,7 @@ namespace Hermes_Services.Repositories
             return this.db.Group.FirstOrDefault(n => n.Id == id);
         }
 
+       
         public List<Group> GetAllGroups()
         {
             return this.db.Group.ToList();
@@ -30,6 +31,7 @@ namespace Hermes_Services.Repositories
             return this.db.UsersInGroup.Where(n => n.GroupId == groupId).ToList();
 
         }
+        
         public List<UsersInGroup> GetGroupByUser(string userId)
         {
             return this.db.UsersInGroup.Where(n => n.UserId == userId).ToList();
@@ -74,7 +76,6 @@ namespace Hermes_Services.Repositories
             };
             this.db.UsersInGroup.Add(userInGroup);
             this.db.SaveChanges();
-
         }
 
         public void DeleteUserIntoGroup(int groupId, string userId)
@@ -88,6 +89,24 @@ namespace Hermes_Services.Repositories
             var user = this.db.UsersInGroup.Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
             return user;
         }
+        public void ChangeModeratorInGroup(int groupId, string nextModeratorId)
+        {
+            var group = this.db.Group.FirstOrDefault(t => t.Id == groupId);
+            group.ModeratorId = nextModeratorId;
+            this.db.SaveChanges();
+        }
+
+        public Group ChangeModerator(int id)
+        {
+            return this.db.Group.FirstOrDefault(n => n.Id == id);
+        }
+
+        public UsersInGroup GetUserInGroupBiId(int id)
+        {
+            return this.db.UsersInGroup.FirstOrDefault(n => n.Id == id);
+
+        }
+
     }
 
 }
