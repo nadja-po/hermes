@@ -56,13 +56,13 @@ namespace Hermes_Services
         public async Task JoinGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            await Clients.Group(groupName).SendAsync("Notify", $"{ Context.UserIdentifier} joined the group");
+            await Clients.Group(groupName).SendAsync("NotifyGroup", $"{ Context.UserIdentifier} joined the group");
         }
 
         public async Task LeaveGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-            await Clients.Group(groupName).SendAsync(Context.UserIdentifier + " left the group");
+            await Clients.Group(groupName).SendAsync("NotifyGroup", $"{ Context.UserIdentifier} left the group");
         }
 
         public async Task SendMessageGroup(string message, string groupName)

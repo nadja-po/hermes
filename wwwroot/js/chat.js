@@ -7,10 +7,6 @@ document.getElementById("sendButton").disabled = true;
 
 //receiving messages
 connection.on("ReceiveMessage", function (user, message) {
-<<<<<<< Updated upstream
-    //var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-=======
->>>>>>> Stashed changes
     var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
@@ -22,7 +18,9 @@ connection.on("ReceiveMessageGroup", function (user, message) {
     var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
     li.textContent = encodedMsg;
-    document.getElementById("messagesListGroup").appendChild(li);
+    chatBubbleGroup(user, message);
+    var container = document.getElementById("chatContainerGroup");
+    container.scrollTop = container.scrollHeight;
 });
 
 connection.on("ReceiveMessageUser", function (url) {
@@ -30,12 +28,14 @@ connection.on("ReceiveMessageUser", function (url) {
     link.setAttribute('href', url);//set href
     link.innerHTML = url;//set text to be seen
     document.body.appendChild(link);
-    document.getElementById("chatContainer").appendChild(link);
+    document.getElementById("NotificationContainer").appendChild(link);
 });
-connection.on("ReceiveMessageNotify", function (message) {
+
+connection.on("ReceiveMessageNotify", function (user, message) {
+    var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
-    li.textContent = message;
-    document.getElementById("messagesList").appendChild(li);
+    li.textContent = encodedMsg;
+    document.getElementById("NotificationContainer").appendChild(li);
 });
 
 connection.start().then(function () {
@@ -109,15 +109,15 @@ else if (document.getElementById("mainChat").value == 0) {
     });
 }
 //sending messages to the chat room:
-else if (document.getElementById("mainChat").value == 3)
+else if (document.getElementById("mainChat").value == 2)
 {
    
-    connection.on('Notify', function (message) {
+    connection.on('NotifyGroup', function (message) {
         let notifyElem = document.createElement("b");
         notifyElem.appendChild(document.createTextNode(message));
         let elem = document.createElement("p");
         elem.appendChild(notifyElem);
-        document.getElementById("chatContainer").appendChild(elem);
+        document.getElementById("chatContainerGroup").appendChild(elem);
     });
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
@@ -138,8 +138,16 @@ function chatBubble(user, message) {
     div.classList = "talk-bubble";
     div.innerHTML = "<div class='talktext'>" + encodedMsg + "</div>";
     document.getElementById("chatContainer").appendChild(div);
+}
+function chatBubbleGroup(user, message) {
+    var encodedMsg = user + " says: " + message;
+    var div = document.createElement("div");
+    div.classList = "talk-bubble";
+    div.innerHTML = "<div class='talktext'>" + encodedMsg + "</div>";
+    document.getElementById("chatContainerGroup").appendChild(div);
 
 }
+
 ////join chat
 //document.getElementById("joinButton").addEventListener("click", function (event) {
 //    var groupName = document.getElementById("groupName").value;
