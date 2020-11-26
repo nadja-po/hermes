@@ -65,7 +65,7 @@ namespace Hermes_chat.Controllers
                     var group1 = groupManager.GetByName(groupName);
                     int _id = group1.Id;
                     string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
-                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessage", user, "You were invited to a private chat: ");
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessageNotify", user, "You were invited to a private chat: ");
                     _hubContext.Clients.User(userName).SendAsync("ReceiveMessageUser", url);
                     return RedirectToAction("Users", "Chat", new { id = _id, userName = name });
                 }
@@ -149,11 +149,13 @@ namespace Hermes_chat.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var oldModerator = groupManager.GetUserInGroup(id, userId).Id;
+            var userName = _userManager.GetUserName(User);
             var groups = groupManager.GetAllGroups();
             var activeGroup = groups.FirstOrDefault(g => g.Id == id);
             var groupName = activeGroup.GroupName;
             var moderatorId = activeGroup.ModeratorId;
             groupManager.DeleteUserIntoGroup(id, userId);
+            _hubContext.Clients.Group(groupName).SendAsync("NotifyGroup", $"{userName} left the group");
             int numberUsers = groupManager.GetNumberUsersInGroup(id); 
             if(numberUsers == 0)
             {
@@ -168,7 +170,7 @@ namespace Hermes_chat.Controllers
                     var nextUserName = _userManager.Users.FirstOrDefault(g => g.Id == nextUserId).UserName;
                     groupManager.ChangeModeratorInGroup(id, nextUserId);
 
-                    _hubContext.Clients.User(nextUserName).SendAsync("ReceiveMessageNotify", "You have become a moderator of the group: " + groupName);
+                    _hubContext.Clients.User(nextUserName).SendAsync("ReceiveMessageNotify", userName, "You have become a moderator of the group: " + groupName);
                 }
             }
             return RedirectToAction(nameof(ChatUsers));

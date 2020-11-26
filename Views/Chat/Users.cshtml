@@ -7,10 +7,13 @@
 {
     @if (Context.User.Identity.Name == ViewBag.user)
     {
-        <input type="hidden" id="mainChat" value="3" />
+        <input type="hidden" id="mainChat" value="2" />
+        <div class="container-fluid;" id="NotificationContainer"></div>
         <div class="row">
             <div class="col-12 col-md-10">
-                <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainer" style="border:1px solid #cecece; height: 300px">
+
+                <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainerGroup" style="border:1px solid #cecece; height: 300px">
+
                 </div>
                 <div class="row">&nbsp;</div>
 
@@ -34,10 +37,12 @@
     }
     else if (Context.User.Identity.Name == ViewBag.creator)
     {
-        <input type="hidden" id="mainChat" value="3" />
+        <input type="hidden" id="mainChat" value="2" />
         <div class="row">
             <div class="col-12 col-md-10">
-                <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainer" style="border:1px solid #cecece; height: 300px">
+
+                <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainerGroup" style="border:1px solid #cecece; height: 300px">
+
                 </div>
                 <div class="row">&nbsp;</div>
 
@@ -61,12 +66,12 @@
     }
     else
     {
-<div class="text-center">
+        <div class="text-center">
 
-    <h1>You don't have access to this room!</h1>
-    <img src="~/Resources/imposter.jpg" />
+            <h1>You don't have access to this room!</h1>
+            <img src="~/Resources/imposter.jpg" />
 
-</div>
+        </div>
     }
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>

@@ -6,6 +6,7 @@
 @if (Context.User.Identity.IsAuthenticated)
 {
 <input type="hidden" id="mainChat" value="1" />
+<div class="container-fluid;" id="NotificationContainer"></div>
 <div class="row">
     <div class="col-12 col-md-8">
         <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainer" style="border:1px solid #cecece; height: 300px">
