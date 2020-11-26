@@ -13,21 +13,9 @@ namespace Hermes_Services.Handlers
         private UsersInGroupHandler _userInGroupHandler;
         public GroupManager()
         {
-                var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                optionsBuilder.UseSqlServer("Server=tcp:hermeschat2020dbserver.database.windows.net,1433;Initial Catalog=Hermes-chat_db;Persist Security Info=False;User ID=hermes.admin;Password=Wasd1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                ApplicationDbContext db = new ApplicationDbContext(optionsBuilder.Options);
-            _groupHandler = new GroupHandler(db);
-            _userInGroupHandler = new UsersInGroupHandler(db);
+            _groupHandler = new GroupHandler();
+            _userInGroupHandler = new UsersInGroupHandler();
 
-        }
-
-        public IEnumerable<Group> GetAllGroups()
-        {
-            return _groupHandler.GetAll();
-        }
-        public Group Get(int id)
-        {
-            return _groupHandler.GetById(id);
         }
 
         public int CreateGroup(Group group)
@@ -35,11 +23,6 @@ namespace Hermes_Services.Handlers
             _groupHandler.Create(group);
             _userInGroupHandler.AddUserInGroup(group.Id, group.CreatorId);
             return group.Id;
-        }
-
-        public void Delete(Group group)
-        {
-            _groupHandler.Delete(group);
         }
 
         public List<UsersInGroup> GetUsersByGroup(int groupId)
@@ -78,5 +61,17 @@ namespace Hermes_Services.Handlers
         //{
         //    throw new NotImplementedException();
         //}
+
+       
+
+        public void ChangeModeratorInGroup(int groupId, string nextModeratorId)
+        {
+            _groupHandler.ChangeModeratorInGroup(groupId, nextModeratorId);
+        }
+
+        public UsersInGroup GetUserInGroupBiId(int id)
+        {
+            return _userInGroupHandler.GetUserInGroupBiId(id);            
+        }
     }
 }

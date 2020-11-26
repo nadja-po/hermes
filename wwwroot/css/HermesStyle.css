@@ -1,0 +1,165 @@
+﻿
+.navbar-dark .navbar-brand {
+    color: #FFD60C;
+}
+
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: left;
+    word-break: break-all;
+    margin-left: 20px;
+    color:#ffad33;
+}
+
+.border-bottom {
+    border-bottom: none !important;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #ffad33;
+}
+
+a:hover {
+    color: #cc6600;
+}
+
+.text-danger {
+    color: #ff0000 !important;
+
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.data-list {
+    height: 50px;
+    width: 200px;
+    overflow-y: hidden;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #DCAE1D;
+    border-color: #F1B24A;
+}
+
+.btn-primary:hover {
+    background-color: #cc6600;
+    border-color: #ff8000;
+}
+
+.btn-primary:focus {
+   background-color: #cc6600 !important;
+   border-color: #ff8000 !important;        
+   box-shadow: none !important;
+   outline: none !important;
+}
+
+.btn-primary:active {
+   background-color: #cc6600 !important;
+   border-color: #ff8000 !important;        
+   box-shadow: none !important;
+   outline: none !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #feda6a;
+    border-color: #DCAE1D;
+    border-bottom: 0px !important;
+}
+
+.form-control:focus {
+    border: 2px solid #FFD60C;
+    box-shadow: none !important;
+    outline: none !important;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.joinButton.btn-primary {
+    color: #fff;
+    background-color: #DCAE1D;
+    border-color: #F1B24A;
+}
+
+.leaveButton.btn-primary {
+    color: #fff;
+    background-color: #DCAE1D;
+    border-color: #F1B24A;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.text-light {
+    color: #DCAE1D !important;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    color: #feda6a;
+    background-color: #809299
+}
+
+/*Text bubble css part*/
+.talk-bubble {
+    margin: 40px;
+    display: block;
+    position: static;
+    width: 200px;
+    height: auto;
+    background-color: lightslategrey;
+}
+
+.talktext {
+    padding: 1em;
+    text-align: left;
+    line-height: 1.5em;
+}
+
+/*end of text bubble css part*/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+    border-top: none !important;
+}

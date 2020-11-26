@@ -3,6 +3,7 @@ using System.Linq;
 using Hermes_Services.Data;
 using Hermes_Models;
 using Hermes_Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hermes_Services.Repositories
 {
@@ -11,8 +12,11 @@ namespace Hermes_Services.Repositories
     {
         private readonly ApplicationDbContext _db;
 
-        public GroupRepository(ApplicationDbContext db) 
+        public GroupRepository() 
         {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseSqlServer("Server=tcp:hermeschat2020dbserver.database.windows.net,1433;Initial Catalog=Hermes-chat_db;Persist Security Info=False;User ID=hermes.admin;Password=Wasd1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            ApplicationDbContext db = new ApplicationDbContext(optionsBuilder.Options);
             _db = db;
         }
 
@@ -60,5 +64,6 @@ namespace Hermes_Services.Repositories
             throw new System.NotImplementedException();
         }
     }
+
 }
     

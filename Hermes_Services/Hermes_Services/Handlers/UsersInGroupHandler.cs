@@ -2,7 +2,6 @@
 using Hermes_Services.Repositories;
 using Hermes_Models;
 using System.Collections.Generic;
-using Hermes_Services.Data;
 
 namespace Hermes_Services.Handler
 {
@@ -11,9 +10,9 @@ namespace Hermes_Services.Handler
     {
         private UsersInGroupRepository _repository;
 
-        public UsersInGroupHandler(ApplicationDbContext db)
+        public UsersInGroupHandler()
         {
-            _repository = new UsersInGroupRepository(db);
+            _repository = new UsersInGroupRepository();
         }
 
         public List<UsersInGroup> GetUsersByGroup(int groupId)
@@ -67,6 +66,12 @@ namespace Hermes_Services.Handler
         public List<UsersInGroup> GetAll()
         {
             return _repository.GetAll().ToList();
+        }
+        
+        public UsersInGroup GetUserInGroupBiId(int id)
+        {
+            return _repository.GetById(id);
+
         }
     }
 
