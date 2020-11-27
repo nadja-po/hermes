@@ -6,14 +6,15 @@
 
 <h1>New group</h1>
     <form asp-controller="Chat" asp-action="CreateGroup" method="post">
+        <div class="col-12 col-md-8">
         <div class="form-group">
             <label asp-for="GroupName">Enter the group name</label>
             <input id="GroupName" asp-for="GroupName" class="form-control" />
             <span asp-validation-for="GroupName" class="text-danger"></span>
         </div>
 
-        <div class="col-12 col-md-4"><input type="submit" id="joinButton" value="Create group" class="btn btn-primary" /></div>
-
+        <div><input type="submit" id="joinButton" value="Create group" class="btn btn-primary" /></div>
+        </div>
     </form>
 
   <script src="~/js/signalr/dist/browser/signalr.js"></script>

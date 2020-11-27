@@ -12,17 +12,17 @@
         <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainer" style="border:1px solid #cecece; height: 300px">
         </div>
         <div>&nbsp;</div>
-        <div class="row">
+        <div>
             <form class="col-12 col-md-12">
-                <div><input type="text" id="messageInput" class="form-control" /></div>
+                <div><input type="text" id="messageInput" class="form-control" placeholder="write a message..." /></div>
                 <div class="row">&nbsp;</div>
-                <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+                <div><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
             </form>
         </div>
         <div>&nbsp;</div>
     </div>
     <div class="col-12 col-md-2">
-        <p>Сhoose a chat room:</p>
+        <p>Сhoose a chat room to join a chat:</p>
         <div class="list-group">
             @foreach (var group in @ViewBag.Groups)
             {
@@ -31,6 +31,7 @@
                     @group.GroupName
                 </a>
             }
+            <p></p>
         </div>
     </div>
     <div class="col-12 col-md-2">
