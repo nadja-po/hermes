@@ -23,7 +23,7 @@
     </div>
     <div class="col-12 col-md-2">
         <p>Сhoose a chat room to join a chat:</p>
-        <div class="list-group">
+        <div class="list-group overflow-auto" style="height: 450px">
             @foreach (var group in @ViewBag.Groups)
             {
                 <a type="button" class="list-group-item list-group-item-action"
@@ -31,12 +31,11 @@
                     @group.GroupName
                 </a>
             }
-            <p></p>
         </div>
     </div>
     <div class="col-12 col-md-2">
         <p>Click on user to send a private message:</p>
-        <div class="list-group">
+        <div class="list-group overflow-auto" style="height: 450px">
             @foreach (var user in Model)
             {
                 <a type="button" class="list-group-item list-group-item-action"
