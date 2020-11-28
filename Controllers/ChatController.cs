@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using Hermes_Services;
+using Hermes_Services.Data;
 
 namespace Hermes_chat.Controllers
 {
@@ -13,10 +14,12 @@ namespace Hermes_chat.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private GroupManager groupManager = new GroupManager();
         private readonly IHubContext<ChatHub> _hubContext;
-        public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext)
+        private readonly ApplicationDbContext db;
+        public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext, ApplicationDbContext db)
         {
             _userManager = userManager;
             _hubContext = hubContext;
+            this.db = db;
         }
 
         public IActionResult ChatUsers()
