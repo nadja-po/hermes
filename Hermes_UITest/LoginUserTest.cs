@@ -9,7 +9,7 @@ namespace Hermes_UITest
 {
     class LoginUserTest
     {        
-        private string _test_url = " https://hermes2020onlinechatapp.azurewebsites.net/";
+        private string _test_url = "  https://hermes2020onlinechat.azurewebsites.net/";
 
         IWebDriver driver;
 
@@ -294,7 +294,5 @@ namespace Hermes_UITest
         {
             driver.Quit();
         }
-
-
     }
 }

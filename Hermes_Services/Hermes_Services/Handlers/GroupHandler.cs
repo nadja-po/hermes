@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Hermes_Services.Handler
 {
-
     public class GroupHandler
     {
         private GroupRepository _repository;
@@ -18,7 +17,6 @@ namespace Hermes_Services.Handler
         public Group GetById(int Id)
         {
             return _repository.GetById(Id);
-
         }
 
         public int GetNumberUsersInGroup(int groupId)

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Hermes_Services.Data;
 using Microsoft.AspNetCore.Authorization;
+using Hermes_Models;
 
 namespace Hermes_Services
 {
@@ -13,10 +12,10 @@ namespace Hermes_Services
     public class ChatHub : Hub
     {
 
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly ApplicationDbContext db;
 
-        public ChatHub(SignInManager<IdentityUser> signInManager, ApplicationDbContext db)
+        public ChatHub(SignInManager<AppUser> signInManager, ApplicationDbContext db)
         {
             _signInManager = signInManager;
             this.db = db;

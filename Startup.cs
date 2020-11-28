@@ -30,7 +30,7 @@ namespace Hermes_chat
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true;
+            services.AddDefaultIdentity<AppUser>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = false; options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false; options.Password.RequiredLength = 6; })
                 .AddEntityFrameworkStores<ApplicationDbContext>();

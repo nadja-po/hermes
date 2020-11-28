@@ -1,5 +1,4 @@
 ﻿using Hermes_Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hermes_Models
@@ -15,7 +14,7 @@ namespace Hermes_Models
 
         public string UserId { get; set; }
 
-        public virtual IdentityUser User { get; set; }
+        public virtual AppUser User { get; set; }
 
     }
 

@@ -15,21 +15,16 @@ namespace Hermes_Services.Handler
             _repository = new UsersInGroupRepository();
         }
 
-        public List<UsersInGroup> GetUsersByGroup(int groupId)
+        public void AddUserInGroup(int groupId, string userId)
         {
-            return _repository.GetAll().Where(x=>x.GroupId == groupId).ToList();
+            UsersInGroup userInGroup = new UsersInGroup()
+            {
+                GroupId = groupId,
+                UserId = userId,
+            };
+
+            _repository.Add(userInGroup);
         }
-
-        public List<UsersInGroup> GetGroupByUser(string userId)
-        {
-            return _repository.GetAll().Where(x => x.UserId == userId).ToList();
-        }
-
-        //public IdentityUser GetUserById(string id)
-        //{
-        //    return this.db.Users.FirstOrDefault(n => n.Id == id);
-        //}
-
         public int Create(UsersInGroup userInGroup)
         {
             _repository.Add(userInGroup);
@@ -41,38 +36,35 @@ namespace Hermes_Services.Handler
             _repository.Delete(userInGroup);
         }
 
-        public void AddUserInGroup(int groupId, string userId)
-        {
-            UsersInGroup userInGroup = new UsersInGroup()
-            {
-                GroupId = groupId,
-                UserId = userId,
-            };
-            _repository.Add(userInGroup);
-
-        }
-
         public void DeleteUserIntoGroup(int groupId, string userId)
         {
             var userInGroup = _repository.GetAll().Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
             _repository.Delete(userInGroup);
         }
 
-        public UsersInGroup GetUserInGroup(int groupId, string userId)
-        {
-            return _repository.GetAll().Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
-        }
-
         public List<UsersInGroup> GetAll()
         {
             return _repository.GetAll().ToList();
         }
-        
-        public UsersInGroup GetUserInGroupBiId(int id)
+
+        public List<UsersInGroup> GetGroupByUser(string userId)
+        {
+            return _repository.GetAll().Where(x => x.UserId == userId).ToList();
+        }
+
+        public List<UsersInGroup> GetUsersByGroup(int groupId)
+        {
+            return _repository.GetAll().Where(x => x.GroupId == groupId).ToList();
+        }
+
+        public UsersInGroup GetUserInGroupById(int id)
         {
             return _repository.GetById(id);
+        }
 
+        public UsersInGroup GetUserInGroup(int groupId, string userId)
+        {
+            return _repository.GetAll().Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
         }
     }
-
 }

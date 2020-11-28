@@ -7,7 +7,7 @@ namespace Hermes_UITest
 {
     class RegistredUserTests
     {
-        String test_url = " https://hermes2020onlinechatapp.azurewebsites.net/";
+        String test_url = "  https://hermes2020onlinechat.azurewebsites.net/";
 
         IWebDriver driver;
 

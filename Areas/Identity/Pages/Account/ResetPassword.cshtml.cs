@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
+using Hermes_Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +13,9 @@ namespace Hermes_chat.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ResetPasswordModel(UserManager<IdentityUser> userManager)
+        public ResetPasswordModel(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }

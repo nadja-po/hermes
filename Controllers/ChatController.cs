@@ -6,16 +6,18 @@ using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using Hermes_Services;
 using Hermes_Services.Handler;
+using System.Collections.Generic;
 
 namespace Hermes_chat.Controllers
 {
     public class ChatController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private GroupManager groupManager = new GroupManager();
         private GroupHandler _groupHandler = new GroupHandler();
+        private UsersInGroupHandler _usersInGroupHandler = new UsersInGroupHandler();
         private readonly IHubContext<ChatHub> _hubContext;
-        public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext)
+        public ChatController(UserManager<AppUser> userManager, IHubContext<ChatHub> hubContext)
         {
             _userManager = userManager;
             _hubContext = hubContext;
@@ -54,7 +56,7 @@ namespace Hermes_chat.Controllers
             Group group = new Group { CreatorId = creatorId, GroupName = groupName };
             if (ModelState.IsValid)
             {
-                if (groupManager.GetByName(groupName) == null)
+                if (_groupHandler.GetByName(groupName) == null)
                 {
                     int _id = _groupHandler.Create(group);
                     string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
@@ -64,7 +66,7 @@ namespace Hermes_chat.Controllers
                 }
                 else
                 {
-                    var group1 = groupManager.GetByName(groupName);
+                    var group1 = _groupHandler.GetByName(groupName);
                     int _id = group1.Id;
                     string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
                     _hubContext.Clients.User(userName).SendAsync("ReceiveMessageNotify", user, "You were invited to a private chat: ");
@@ -86,11 +88,12 @@ namespace Hermes_chat.Controllers
         [HttpPost]
         public IActionResult CreateGroup(string groupName)
         {
-            var creatorId = _userManager.GetUserId(User);
-            Group group = new Group { CreatorId = creatorId, GroupName = groupName, ModeratorId = creatorId };
+            var user = _userManager.GetUserAsync(User).Result;
+            Group group = new Group { CreatorId = user.Id, GroupName = groupName, ModeratorId = user.Id};
+            group.Users.Add(user);
             if (ModelState.IsValid)
             {
-                if (groupManager.GetByName(groupName) == null)
+                if (_groupHandler.GetByName(groupName) == null)
                 {
                     int _id = groupManager.CreateGroup(group);
                     return RedirectToAction("Groups", "Chat", new { id = _id });
@@ -115,10 +118,10 @@ namespace Hermes_chat.Controllers
             if (id.HasValue)
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
-                var users = groupManager.GetUsersByGroup(id.Value);
-                var numberUsers = groupManager.GetNumberUsersInGroup(id.Value);
+                var users = _usersInGroupHandler.GetUsersByGroup(id.Value);
+                var numberUsers = _groupHandler.GetNumberUsersInGroup(id.Value);
                 var user = _userManager.GetUserId(User);
-                var userInGroup = groupManager.GetUserInGroup(activeGroup.Id, user);
+                var userInGroup = _usersInGroupHandler.GetUserInGroup(activeGroup.Id, user);
                 ViewBag.Group = activeGroup.GroupName;
                 ViewBag.GroupId = activeGroup.Id;
                 ViewBag.userName = _userManager.GetUserName(User);
@@ -135,9 +138,9 @@ namespace Hermes_chat.Controllers
         {
 
             var user = _userManager.GetUserId(User);
-            if (groupManager.GetUserInGroup(id, user) == null)
+            if (_usersInGroupHandler.GetUserInGroup(id, user) == null)
             {
-                groupManager.AddUserInGroup(id, user);
+                _usersInGroupHandler.AddUserInGroup(id, user);
                 return RedirectToAction("Groups", "Chat", new { id });
             }
             else
@@ -150,15 +153,15 @@ namespace Hermes_chat.Controllers
         public IActionResult LeaveGroup(int id)
         {
             var userId = _userManager.GetUserId(User);
-            var oldModerator = groupManager.GetUserInGroup(id, userId).Id;
+            var oldModerator = _usersInGroupHandler.GetUserInGroup(id, userId).Id;
             var userName = _userManager.GetUserName(User);
             var groups = _groupHandler.GetAll();
             var activeGroup = groups.FirstOrDefault(g => g.Id == id);
             var groupName = activeGroup.GroupName;
             var moderatorId = activeGroup.ModeratorId;
-            groupManager.DeleteUserIntoGroup(id, userId);
+            _usersInGroupHandler.DeleteUserIntoGroup(id, userId);
             _hubContext.Clients.Group(groupName).SendAsync("NotifyGroup", $"{userName} left the group");
-            int numberUsers = groupManager.GetNumberUsersInGroup(id); 
+            int numberUsers = _groupHandler.GetNumberUsersInGroup(id); 
             if(numberUsers == 0)
             {
                 _groupHandler.Delete(_groupHandler.GetById(id));
@@ -167,10 +170,10 @@ namespace Hermes_chat.Controllers
             {
                 if(userId == moderatorId)
                 {
-                    var nextUser = groupManager.GetUsersByGroup(id).Where(l => l.Id != oldModerator).Min(n => n.Id);
-                    var nextUserId = groupManager.GetUserInGroupBiId(nextUser).UserId;
+                    var nextUser = _usersInGroupHandler.GetUsersByGroup(id).Where(l => l.Id != oldModerator).Min(n => n.Id);
+                    var nextUserId = _usersInGroupHandler.GetUserInGroupById(nextUser).UserId;
                     var nextUserName = _userManager.Users.FirstOrDefault(g => g.Id == nextUserId).UserName;
-                    groupManager.ChangeModeratorInGroup(id, nextUserId);
+                    _groupHandler.ChangeModeratorInGroup(id, nextUserId);
 
                     _hubContext.Clients.User(nextUserName).SendAsync("ReceiveMessageNotify", userName, "You have become a moderator of the group: " + groupName);
                 }
