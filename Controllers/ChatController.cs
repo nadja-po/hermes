@@ -121,9 +121,9 @@ namespace Hermes_chat.Controllers
         {
             var groups = groupManager.GetAllGroups();
             ViewBag.Groups = groups;
-            var groupDB = db.Group.Select(x => x.Id).ToList();
+            //var groupDB = db.Group.Select(x => x.Id).ToList();
 
-            if (id.HasValue && groupDB.Contains((int)id))
+            if (id.HasValue)/* in brackets && groupDB.Contains((int)id)*/
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var users = groupManager.GetUsersByGroup(id.Value);
@@ -139,10 +139,12 @@ namespace Hermes_chat.Controllers
                 ViewBag.userInGroup = userInGroup;
             }
 
-            else
-            {
-                ModelState.AddModelError("error", "Group not found!");
-            }
+            //else
+            //{
+            //    ModelState.AddModelError("error", "Group not found!");
+
+            //}
+            
             return View(_userManager.Users.ToList());
         }
 
