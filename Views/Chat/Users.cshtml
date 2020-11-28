@@ -10,58 +10,55 @@
         <input type="hidden" id="mainChat" value="2" />
         <div class="container-fluid;" id="NotificationContainer"></div>
         <div class="row">
-            <div class="col-12 col-md-10">
-
+            <div class="col-12 col-md-8">
                 <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainerGroup" style="border:1px solid #cecece; height: 300px">
-
                 </div>
-                <div class="row">&nbsp;</div>
-
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        Message to @ViewBag.creator
-                        <input type="hidden" id="groupName" value="@ViewBag.group" />
-                        <p></p>
-                    </div>
+                <div>
+                    <p></p>
+                    Message to @ViewBag.creator
+                    <input type="hidden" id="groupName" value="@ViewBag.group" />
                 </div>
-                <div class="row">
+                <div>
                     <form class="col-12 col-md-12">
-                        <div><input type="text" id="messageInput" class="form-control" /></div>
+                        <div><input type="text" id="messageInput" class="form-control" placeholder="write a message..." /></div>
                         <div class="row">&nbsp;</div>
-                        <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+                        <div><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
                     </form>
+                    <p></p>
                 </div>
             </div>
-            <div class="row">&nbsp;</div>
+            <div class="col-12 col-md-4">
+                <h2>Private chat</h2>
+                <h2>with @ViewBag.creator</h2>
+            </div>
         </div>
     }
     else if (Context.User.Identity.Name == ViewBag.creator)
     {
         <input type="hidden" id="mainChat" value="2" />
+        <div class="container-fluid;" id="NotificationContainer"></div>
         <div class="row">
-            <div class="col-12 col-md-10">
-
+            <div class="col-12 col-md-8">
                 <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainerGroup" style="border:1px solid #cecece; height: 300px">
-
                 </div>
-                <div class="row">&nbsp;</div>
-
-                <div class="row">
-                    <div class="col-12 col-md-4">
-                        Message to @ViewBag.user
-                        <input type="hidden" id="groupName" value="@ViewBag.group" />
-                        <p></p>
-                    </div>
+                <div>
+                    <p></p>
+                    Message to @ViewBag.user
+                    <input type="hidden" id="groupName" value="@ViewBag.group" />
                 </div>
-                <div class="row">
+                <div>
                     <form class="col-12 col-md-12">
-                        <div><input type="text" id="messageInput" class="form-control" /></div>
+                        <div><input type="text" id="messageInput" class="form-control" placeholder="write a message..." /></div>
                         <div class="row">&nbsp;</div>
-                        <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+                        <div><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
                     </form>
+                    <p></p>
                 </div>
             </div>
-            <div class="row">&nbsp;</div>
+            <div class="col-12 col-md-4">
+                <h2>Private chat</h2>
+                <h2>with @ViewBag.user</h2>
+            </div>
         </div>
     }
     else
