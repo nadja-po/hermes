@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using Hermes_Services;
+using Hermes_Services.Data;
 
 namespace Hermes_chat.Controllers
 {
@@ -13,10 +14,12 @@ namespace Hermes_chat.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private GroupManager groupManager = new GroupManager();
         private readonly IHubContext<ChatHub> _hubContext;
-        public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext)
+        private readonly ApplicationDbContext db;
+        public ChatController(UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext, ApplicationDbContext db)
         {
             _userManager = userManager;
             _hubContext = hubContext;
+            this.db = db;
         }
 
         public IActionResult ChatUsers()
@@ -30,7 +33,10 @@ namespace Hermes_chat.Controllers
         public IActionResult Users(int? id, string userName)
         {
             var groups = groupManager.GetAllGroups();
-            if (id.HasValue)
+            var usersDB = db.Users.Select(x => x.UserName);
+            var groupDB = db.Group.Select(x => x.Id).ToList();
+
+            if (id.HasValue && groupDB.Contains((int)id) && usersDB.Contains(userName))
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var creatorId = activeGroup.CreatorId;
@@ -38,6 +44,11 @@ namespace Hermes_chat.Controllers
                 ViewBag.creator = creatorName;
                 ViewBag.user = userName;
                 ViewBag.group = activeGroup.GroupName;
+            }
+
+            else
+            {
+                ModelState.AddModelError("error", "User not found!");
             }
 
             return View();
@@ -110,7 +121,9 @@ namespace Hermes_chat.Controllers
         {
             var groups = groupManager.GetAllGroups();
             ViewBag.Groups = groups;
-            if (id.HasValue)
+            //var groupDB = db.Group.Select(x => x.Id).ToList();
+
+            if (id.HasValue)/* in brackets && groupDB.Contains((int)id)*/
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var users = groupManager.GetUsersByGroup(id.Value);
@@ -126,6 +139,12 @@ namespace Hermes_chat.Controllers
                 ViewBag.userInGroup = userInGroup;
             }
 
+            //else
+            //{
+            //    ModelState.AddModelError("error", "Group not found!");
+
+            //}
+            
             return View(_userManager.Users.ToList());
         }
 
