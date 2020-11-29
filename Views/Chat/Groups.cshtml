@@ -13,7 +13,7 @@
         <div class="container-fluid;" id="NotificationContainer"></div>
         <input type="hidden" id="groupId" value="@ViewBag.GroupId" />
 
-        <a class="nav-link text-dark" asp-controller="Chat" asp-action="JoinGroup" asp-route-id="@ViewBag.GroupId">Join Group</a>
+        <a class="nav-link text-light" asp-controller="Chat" asp-action="JoinGroup" asp-route-id="@ViewBag.GroupId"><h4>Join Group</h4></a>
     }
     else
     {
@@ -21,29 +21,25 @@
         <div class="container-fluid;" id="NotificationContainer"></div>
         <input type="hidden" id="groupId" value="@ViewBag.GroupId" />
 
-        <a class="nav-link text-dark" asp-controller="Chat" asp-action="LeaveGroup" asp-route-id="@ViewBag.GroupId">Leave Group</a>
+        <a class="nav-link text-light" asp-controller="Chat" asp-action="LeaveGroup" asp-route-id="@ViewBag.GroupId"><h4>Leave Group</h4></a>
 
         <div class="row">
 
-            <div class="col-12 col-md-10">
+            <div class="col-12 col-md-8">
                 <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainerGroup" style="border:1px solid #cecece; height: 300px">
                 </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-12 col-md-4">
+                    <div>
+                        <p></p>
                         Message to @ViewBag.group group
                         <input type="hidden" id="groupName" value="@ViewBag.group" />
-                        <p></p>
-                    </div>
                 </div>
-                <div class="row">
+                <div>
                     <form class="col-12 col-md-12">
-                        <div><input type="text" id="messageInput" class="form-control" /></div>
+                        <div><input type="text" id="messageInput" class="form-control" placeholder="write a message"/></div>
                         <div class="row">&nbsp;</div>
-                        <div class="col-12 col-md-4"><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
+                        <div><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
                     </form>
                 </div>
-                <div class="row">&nbsp;</div>
             </div>
             @*There are @ViewBag.numberUsers users*@
             @*<div class="col-12 col-md-3">
@@ -68,6 +64,10 @@
                         }
                     </div>
                 </div>*@
+        <div class="col-12 col-md-4">
+            <h1>@ViewBag.group</h1>
+            <h2>group chat</h2>
+        </div>
         </div>
     }
     <script src="~/js/signalr/dist/browser/signalr.js"></script>

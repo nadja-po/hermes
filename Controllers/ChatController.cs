@@ -15,6 +15,7 @@ namespace Hermes_chat.Controllers
         private GroupHandler _groupHandler = new GroupHandler();
         private UsersInGroupHandler _usersInGroupHandler = new UsersInGroupHandler();
         private readonly IHubContext<ChatHub> _hubContext;
+        
         public ChatController(UserManager<AppUser> userManager, IHubContext<ChatHub> hubContext)
         {
             _userManager = userManager;
@@ -32,7 +33,7 @@ namespace Hermes_chat.Controllers
         public IActionResult Users(int? id, string userName)
         {
             var groups = _groupHandler.GetAll();
-            if (id.HasValue)
+            if (id.HasValue && _groupHandler.GetAll().Any(x => x.Id == id) && _userManager.Users.Any(x=>x.UserName == userName))
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var creatorId = activeGroup.CreatorId;
@@ -40,6 +41,10 @@ namespace Hermes_chat.Controllers
                 ViewBag.creator = creatorName;
                 ViewBag.user = userName;
                 ViewBag.group = activeGroup.GroupName;
+            }
+            else
+            {
+                ModelState.AddModelError("error", "User not found!");
             }
 
             return View();
@@ -117,7 +122,7 @@ namespace Hermes_chat.Controllers
         {
             var groups = _groupHandler.GetAll();
             ViewBag.Groups = groups;
-            if (id.HasValue)
+            if (id.HasValue)/* in brackets && groups.Any(x=>x.Id == id)*/
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var users = _usersInGroupHandler.GetUsersByGroup(id.Value);
@@ -131,6 +136,12 @@ namespace Hermes_chat.Controllers
                 ViewBag.numberUsers = numberUsers;
                 //ViewBag.user = user;
                 ViewBag.userInGroup = userInGroup;
+            }
+
+            else
+            {
+                ModelState.AddModelError("error", "Group not found!");
+
             }
 
             return View(_userManager.Users.ToList());
