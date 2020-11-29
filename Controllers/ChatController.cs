@@ -1,5 +1,4 @@
-﻿using Hermes_Services.Handlers;
-using Hermes_Models;
+﻿using Hermes_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -13,7 +12,6 @@ namespace Hermes_chat.Controllers
     public class ChatController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private GroupManager groupManager = new GroupManager();
         private GroupHandler _groupHandler = new GroupHandler();
         private UsersInGroupHandler _usersInGroupHandler = new UsersInGroupHandler();
         private readonly IHubContext<ChatHub> _hubContext;
@@ -90,12 +88,16 @@ namespace Hermes_chat.Controllers
         {
             var user = _userManager.GetUserAsync(User).Result;
             Group group = new Group { CreatorId = user.Id, GroupName = groupName, ModeratorId = user.Id};
-            group.Users.Add(user);
+            if (user.UsersInGroup == null)
+            {
+                user.UsersInGroup = new List<UsersInGroup>();
+            }
             if (ModelState.IsValid)
             {
                 if (_groupHandler.GetByName(groupName) == null)
                 {
-                    int _id = groupManager.CreateGroup(group);
+                    _userManager.UpdateAsync(user);
+                    int _id = _usersInGroupHandler.CreateUserInGroup(group, user.Id);
                     return RedirectToAction("Groups", "Chat", new { id = _id });
                 }
                 else
@@ -136,11 +138,15 @@ namespace Hermes_chat.Controllers
 
         public IActionResult JoinGroup(int id)
         {
-
-            var user = _userManager.GetUserId(User);
-            if (_usersInGroupHandler.GetUserInGroup(id, user) == null)
+            var group = _groupHandler.GetById(id);
+            var user = _userManager.GetUserAsync(User).Result;
+            if (user.UsersInGroup == null)
             {
-                _usersInGroupHandler.AddUserInGroup(id, user);
+                user.UsersInGroup = new List<UsersInGroup>();
+            }
+            if (_usersInGroupHandler.GetUserInGroup(id, user.Id) == null)
+            {
+                _usersInGroupHandler.AddUserInGroup(_groupHandler.GetById(id), user.Id);
                 return RedirectToAction("Groups", "Chat", new { id });
             }
             else

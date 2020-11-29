@@ -15,15 +15,28 @@ namespace Hermes_Services.Handler
             _repository = new UsersInGroupRepository();
         }
 
-        public void AddUserInGroup(int groupId, string userId)
+        public int AddUserInGroup(Group group, string userId)
         {
             UsersInGroup userInGroup = new UsersInGroup()
             {
-                GroupId = groupId,
+                GroupId = group.Id,
                 UserId = userId,
             };
 
             _repository.Add(userInGroup);
+            return group.Id;
+        }
+
+        public int CreateUserInGroup(Group group, string userId)
+        {
+            UsersInGroup userInGroup = new UsersInGroup()
+            {
+                Group = group,
+                UserId = userId,
+            };
+
+            _repository.Add(userInGroup);
+            return group.Id;
         }
         public int Create(UsersInGroup userInGroup)
         {

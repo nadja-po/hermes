@@ -20,6 +20,16 @@ namespace Hermes_Services.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UsersInGroup>().HasKey(s => new { s.GroupId, s.UserId });
 
+            modelBuilder.Entity<UsersInGroup>()
+                 .HasOne(ub => ub.User)
+                 .WithMany(au => au.UsersInGroup)
+                 .HasForeignKey(ub => ub.UserId);
+
+            modelBuilder.Entity<UsersInGroup>()
+                .HasOne(ub => ub.Group)
+                .WithMany()
+                .HasForeignKey(ub => ub.GroupId);
+
         }
     }
 }

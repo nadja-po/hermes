@@ -24,6 +24,7 @@ namespace Hermes_Services.Repositories
 
         public void Add(UsersInGroup entity)
         {
+
             _db.UsersInGroup.Add(entity);
             _db.SaveChanges();
         }

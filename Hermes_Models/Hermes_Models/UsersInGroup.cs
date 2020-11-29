@@ -11,7 +11,6 @@ namespace Hermes_Models
         public int GroupId { get; set; }
 
         public virtual Group Group { get; set; }
-
         public string UserId { get; set; }
 
         public virtual AppUser User { get; set; }

@@ -15,7 +15,7 @@ namespace Hermes_Services.Repositories
         public GroupRepository() 
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-Hermes_chat-76EDEDF5-906A-401D-98D8-1121EADE40D8;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-Hermes_chat-76EDEDF5-906A-401D-98D8-1121EADE40D8;Trusted_Connection=True");
             ApplicationDbContext db = new ApplicationDbContext(optionsBuilder.Options);
             _db = db;
         }

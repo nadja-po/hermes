@@ -17,11 +17,11 @@ namespace Hermes_Models
         [Required]
         public string CreatorId { get; set; }
         public string ModeratorId { get; set; }
-        public virtual ICollection<AppUser> Users { get; set; }
+        public virtual ICollection<UsersInGroup> Users { get; set; }
 
         public Group()
         {
-            Users = new List<AppUser>();
+            Users = new List<UsersInGroup>();
         }
     }
 }
