@@ -157,7 +157,7 @@ namespace Hermes_chat.Controllers
             }
             if (_usersInGroupHandler.GetUserInGroup(id, user.Id) == null)
             {
-                _usersInGroupHandler.AddUserInGroup(_groupHandler.GetById(id), user.Id);
+                _usersInGroupHandler.AddUserInGroup(group, user.Id);
                 return RedirectToAction("Groups", "Chat", new { id });
             }
             else
@@ -169,30 +169,24 @@ namespace Hermes_chat.Controllers
         }
         public IActionResult LeaveGroup(int id)
         {
-            var userId = _userManager.GetUserId(User);
-            var oldModerator = _usersInGroupHandler.GetUserInGroup(id, userId).Id;
-            var userName = _userManager.GetUserName(User);
-            var groups = _groupHandler.GetAll();
-            var activeGroup = groups.FirstOrDefault(g => g.Id == id);
-            var groupName = activeGroup.GroupName;
-            var moderatorId = activeGroup.ModeratorId;
-            _usersInGroupHandler.DeleteUserIntoGroup(id, userId);
-            _hubContext.Clients.Group(groupName).SendAsync("NotifyGroup", $"{userName} left the group");
+            var user = _userManager.GetUserAsync(User).Result;
+            var oldModerator = user.Id;
+            var activeGroup = _groupHandler.GetById(id);
+            _usersInGroupHandler.DeleteUserIntoGroup(id, user.Id);
+            _hubContext.Clients.Group(activeGroup.GroupName).SendAsync("NotifyGroup", $"{user.UserName} left the group");
             int numberUsers = _groupHandler.GetNumberUsersInGroup(id); 
             if(numberUsers == 0)
             {
-                _groupHandler.Delete(_groupHandler.GetById(id));
+                _groupHandler.Delete(activeGroup);
             }
             else
             {
-                if(userId == moderatorId)
+                if(user.Id == activeGroup.ModeratorId)
                 {
-                    var nextUser = _usersInGroupHandler.GetUsersByGroup(id).Where(l => l.Id != oldModerator).Min(n => n.Id);
-                    var nextUserId = _usersInGroupHandler.GetUserInGroupById(nextUser).UserId;
-                    var nextUserName = _userManager.Users.FirstOrDefault(g => g.Id == nextUserId).UserName;
-                    _groupHandler.ChangeModeratorInGroup(id, nextUserId);
+                    var nextUser = _usersInGroupHandler.GetUsersByGroup(id).FirstOrDefault(l => l.UserId != oldModerator);
+                    _groupHandler.ChangeModeratorInGroup(id, nextUser.User.Id);
 
-                    _hubContext.Clients.User(nextUserName).SendAsync("ReceiveMessageNotify", userName, "You have become a moderator of the group: " + groupName);
+                    _hubContext.Clients.User(nextUser.User.UserName).SendAsync("ReceiveMessageNotify", user.UserName, "You have become a moderator of the group: " + activeGroup.GroupName);
                 }
             }
             return RedirectToAction(nameof(ChatUsers));
