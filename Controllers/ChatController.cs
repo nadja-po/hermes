@@ -151,7 +151,7 @@ namespace Hermes_chat.Controllers
         {
             var group = _groupHandler.GetById(id);
             var user = _userManager.GetUserAsync(User).Result;
-            if (user.UsersInGroup == null)
+             if (user.UsersInGroup == null)
             {
                 user.UsersInGroup = new List<UsersInGroup>();
             }
@@ -172,10 +172,10 @@ namespace Hermes_chat.Controllers
             var user = _userManager.GetUserAsync(User).Result;
             var oldModerator = user.Id;
             var activeGroup = _groupHandler.GetById(id);
+            var users = _usersInGroupHandler.GetUsersByGroup(id);
             _usersInGroupHandler.DeleteUserIntoGroup(id, user.Id);
             _hubContext.Clients.Group(activeGroup.GroupName).SendAsync("NotifyGroup", $"{user.UserName} left the group");
-            int numberUsers = _groupHandler.GetNumberUsersInGroup(id); 
-            if(numberUsers == 0)
+            if(_usersInGroupHandler.GetUsersByGroup(id).Count < 1)
             {
                 _groupHandler.Delete(activeGroup);
             }
@@ -184,9 +184,9 @@ namespace Hermes_chat.Controllers
                 if(user.Id == activeGroup.ModeratorId)
                 {
                     var nextUser = _usersInGroupHandler.GetUsersByGroup(id).FirstOrDefault(l => l.UserId != oldModerator);
-                    _groupHandler.ChangeModeratorInGroup(id, nextUser.User.Id);
+                    _groupHandler.ChangeModeratorInGroup(id, nextUser.UserId);
 
-                    _hubContext.Clients.User(nextUser.User.UserName).SendAsync("ReceiveMessageNotify", user.UserName, "You have become a moderator of the group: " + activeGroup.GroupName);
+                    _hubContext.Clients.User(_userManager.FindByIdAsync(nextUser.UserId).Result.UserName).SendAsync("ReceiveMessageNotify", user.UserName, "You have become a moderator of the group: " + activeGroup.GroupName);
                 }
             }
             return RedirectToAction(nameof(ChatUsers));
