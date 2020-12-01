@@ -15,7 +15,7 @@ namespace Hermes_Services.Repositories
         public UsersInGroupRepository()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-Hermes_chat-76EDEDF5-906A-401D-98D8-1121EADE40D8;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=tcp:hermeschat2020dbserver.database.windows.net,1433;Initial Catalog=Hermes-chat_db;Persist Security Info=False;User ID=hermes.admin;Password=Wasd1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             ApplicationDbContext db = new ApplicationDbContext(optionsBuilder.Options);
             _db = db;
         }
