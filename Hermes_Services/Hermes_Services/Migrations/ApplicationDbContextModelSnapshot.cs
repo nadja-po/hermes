@@ -4,24 +4,22 @@ using Hermes_Services.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hermes_Services.Data.Migrations
+namespace Hermes_Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201111010925_AddGroups")]
-    partial class AddGroups
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Hermes_chat.Models.Group", b =>
+            modelBuilder.Entity("Hermes_Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,7 +32,8 @@ namespace Hermes_Services.Data.Migrations
 
                     b.Property<string>("GroupName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("ModeratorId")
                         .HasColumnType("nvarchar(max)");
@@ -44,32 +43,27 @@ namespace Hermes_Services.Data.Migrations
                     b.ToTable("Group");
                 });
 
-            modelBuilder.Entity("Hermes_chat.Models.Message", b =>
+            modelBuilder.Entity("Hermes_Models.UsersInGroup", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("GroupId1")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("When")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupId", "UserId");
+
+                    b.HasIndex("GroupId1");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("UsersInGroup");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -278,30 +272,30 @@ namespace Hermes_Services.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Hermes_chat.Models.AppUser", b =>
+            modelBuilder.Entity("Hermes_Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
-            modelBuilder.Entity("Hermes_chat.Models.UsersInGroup", b =>
+            modelBuilder.Entity("Hermes_Models.UsersInGroup", b =>
                 {
-                    b.HasBaseType("Hermes_chat.Models.AppUser");
+                    b.HasOne("Hermes_Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
+                    b.HasOne("Hermes_Models.Group", null)
+                        .WithMany("Users")
+                        .HasForeignKey("GroupId1");
 
-                    b.HasIndex("GroupId");
-
-                    b.HasDiscriminator().HasValue("UsersInGroup");
-                });
-
-            modelBuilder.Entity("Hermes_chat.Models.Message", b =>
-                {
-                    b.HasOne("Hermes_chat.Models.AppUser", "Sender")
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId");
+                    b.HasOne("Hermes_Models.AppUser", "User")
+                        .WithMany("UsersInGroup")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -351,15 +345,6 @@ namespace Hermes_Services.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Hermes_chat.Models.UsersInGroup", b =>
-                {
-                    b.HasOne("Hermes_chat.Models.Group", "Group")
-                        .WithMany("Users")
-                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

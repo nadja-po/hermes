@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Hermes_Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hermes_Models
 {
-    public class Group 
+    public class Group : TEntity
     {
         public int Id { get; set; }
 
@@ -17,33 +17,11 @@ namespace Hermes_Models
         [Required]
         public string CreatorId { get; set; }
         public string ModeratorId { get; set; }
+        public virtual ICollection<UsersInGroup> Users { get; set; }
 
         public Group()
         {
-            Users = new HashSet<IdentityUser>();
-        }
-
-        public virtual ICollection<IdentityUser> Users { get; set; }
-
-        public Group ToData()
-        {
-            return new Group()
-            {
-                Id = this.Id,
-                GroupName = this.GroupName,
-                CreatorId = this.CreatorId,
-                ModeratorId = this.ModeratorId,
-            };
-        }
-        public static Group FromData(Group data)
-        {
-            return new Group()
-            {
-                Id = data.Id,
-                GroupName = data.GroupName,
-                CreatorId = data.CreatorId,
-                ModeratorId = data.ModeratorId,
-            };
+            Users = new List<UsersInGroup>();
         }
     }
 }

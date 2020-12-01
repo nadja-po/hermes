@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Hermes_Services.Repositories
 {
 
-    public class GroupRepository : IRepository<Group>
+    public class UsersInGroupRepository : IRepository<UsersInGroup>
     {
         private readonly ApplicationDbContext _db;
 
-        public GroupRepository() 
+        public UsersInGroupRepository()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer("Server=tcp:hermeschat2020dbserver.database.windows.net,1433;Initial Catalog=Hermes-chat_db;Persist Security Info=False;User ID=hermes.admin;Password=Wasd1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
@@ -20,42 +20,50 @@ namespace Hermes_Services.Repositories
             _db = db;
         }
 
-        IEnumerable<Group> IRepository<Group>.GetAll => throw new System.NotImplementedException();
+        IEnumerable<UsersInGroup> IRepository<UsersInGroup>.GetAll => throw new System.NotImplementedException();
 
-        public void Add(Group entity)
+        public void Add(UsersInGroup entity)
         {
-            _db.Group.Add(entity);
+
+            _db.UsersInGroup.Add(entity);
             _db.SaveChanges();
         }
 
-        public void Delete(Group entity)
+        public void Delete(UsersInGroup entity)
         {
-            _db.Group.Remove(entity);
+            _db.UsersInGroup.Remove(entity);
             _db.SaveChanges();
         }
 
-        public void Update(Group entity)
+        public void Update(UsersInGroup entity)
         {
-            _db.Group.Update(entity);
+            _db.UsersInGroup.Update(entity);
             _db.SaveChanges();
         }
 
-        public Group GetById(int? Id)
+        public UsersInGroup GetById(int? Id)
         {
-            var result = _db.Group.FirstOrDefault( x => x.Id == Id);
+            var result = _db.UsersInGroup.FirstOrDefault( x => x.Id == Id);
             return result;
         }
 
-        public IEnumerable<Group> GetAll()
+        public IEnumerable<UsersInGroup> GetAll()
         {
-            return _db.Group.ToList<Group>();
+            var result = _db.UsersInGroup.ToList<UsersInGroup>();
+            if (result.Count() > 0)
+            {
+                return result;
+            }
+            else
+            {
+                return new List<UsersInGroup>(); 
+            }
         }
 
-        public Group GetById(string Id)
+        public UsersInGroup GetById(string Id)
         {
             throw new System.NotImplementedException();
         }
     }
-
 }
     

@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using Hermes_Interfaces;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hermes_Models
 {
-    public class UsersInGroup 
+    public class UsersInGroup : TEntity
     {
         public int Id { get; set; }
 
@@ -15,12 +11,10 @@ namespace Hermes_Models
         public int GroupId { get; set; }
 
         public virtual Group Group { get; set; }
-
         public string UserId { get; set; }
 
-        public virtual IdentityUser User { get; set; }
+        public virtual AppUser User { get; set; }
 
-        
     }
 
 }
