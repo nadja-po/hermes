@@ -6,5 +6,7 @@ namespace Hermes_Models
     public class AppUser : IdentityUser
     {
         public virtual ICollection<UsersInGroup> UsersInGroup { get; set; }
+        public bool IsConnected { get; set; }
     }
+
 }

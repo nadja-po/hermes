@@ -31,6 +31,8 @@
   <ItemGroup>
     <Compile Include="Migrations\20201129092400_MTM.cs" />
     <Compile Include="Migrations\20201129092400_MTM.Designer.cs" />
+    <Compile Include="Migrations\20201202105740_AddIsConnected.cs" />
+    <Compile Include="Migrations\20201202105740_AddIsConnected.Designer.cs" />
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
   </ItemGroup>
 

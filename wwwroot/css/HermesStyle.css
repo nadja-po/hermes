@@ -18,7 +18,8 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #ffad33;
+    /*color: #ffad33;*/
+    color: #0366d6;
 }
 
 a:hover {
@@ -79,7 +80,7 @@ a:hover {
 }
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
+    html {
     font-size: 14px;
 }
 
@@ -166,4 +167,19 @@ body {
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
     border-top: none !important;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.list-group-item-action {
+    width: 100%;
+    color: #495057;
+    text-align: inherit;
 }

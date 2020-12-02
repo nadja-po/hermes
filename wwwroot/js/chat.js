@@ -5,7 +5,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-//receiving messages
+//receiving messages and notifications
 connection.on("ReceiveMessage", function (user, message) {
     var encodedMsg = user + " says: " + message;
     var li = document.createElement("li");
@@ -37,7 +37,7 @@ connection.on("ReceiveMessageNotify", function (user, message) {
     li.textContent = encodedMsg;
     document.getElementById("NotificationContainer").appendChild(li);
 });
-
+//joining in group
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
     var groupName = document.getElementById("groupName").value;
@@ -50,7 +50,7 @@ connection.start().then(function () {
     return console.error(err.toString());
     
 });
-
+//for notifications
 connection.on('NotifyUser', function (message) {
     let notifyElem = document.createElement("b");
     notifyElem.appendChild(document.createTextNode(message));
@@ -62,17 +62,17 @@ connection.on('NotifyUser', function (message) {
 //sending messages to the main chat:
 if (document.getElementById("mainChat").value == 1) {
 
-    //notification function for incoming and outgoing users
-    connection.on('Notify', function (message) {
-        let notifyElem = document.createElement("b");
-        notifyElem.appendChild(document.createTextNode(message));
-        let elem = document.createElement("p");
-        elem.appendChild(notifyElem);
-        chatBubble(user, message);
-        var container = document.getElementById("chatContainer");
-        container.scrollTop = container.scrollHeight;
+    //change color if connected/disconnected
+    connection.on('Notify', function (/*message, */userName) {
+        var user = userName;
+        document.getElementById(user).style.background = "#DCAE1D";
+    });
+    connection.on('NotifyD', function (/*message, */userName) {
+        var user = userName;
+        document.getElementById(user).style.background = "#FFF";
     });
 
+    //sending messages in main chat
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
       
@@ -111,7 +111,16 @@ else if (document.getElementById("mainChat").value == 0) {
 //sending messages to the chat room:
 else if (document.getElementById("mainChat").value == 2)
 {
-   
+    //change color if connected/disconnected
+    connection.on('Notify', function (/*message, */userName) {
+        var user = userName;
+        document.getElementById(user).style.background = "#DCAE1D";
+    });
+    connection.on('NotifyD', function (/*message, */userName) {
+        var user = userName;
+        document.getElementById(user).style.background = "#FFF";
+    });
+     //notification function for incoming and outgoing users
     connection.on('NotifyGroup', function (message) {
         let notifyElem = document.createElement("b");
         notifyElem.appendChild(document.createTextNode(message));
@@ -119,6 +128,7 @@ else if (document.getElementById("mainChat").value == 2)
         elem.appendChild(notifyElem);
         document.getElementById("chatContainerGroup").appendChild(elem);
     });
+    //sending messages in group chat
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var message = document.getElementById("messageInput").value;
         var groupName = document.getElementById("groupName").value;
@@ -131,6 +141,7 @@ else if (document.getElementById("mainChat").value == 2)
         document.getElementById("messageInput").value = "";
     });
 }
+
 
 function chatBubble(user, message) {
     var encodedMsg = user + " says: " + message;

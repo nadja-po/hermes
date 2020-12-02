@@ -26,7 +26,8 @@ namespace Hermes_chat.Controllers
         {
             ViewBag.Groups = _groupHandler.GetAll().Where(g => g.ModeratorId != null);
             ViewBag.user = _userManager.GetUserName(User);
-            return View(_userManager.Users.ToList());
+            ViewBag.users = _userManager.Users.ToList().OrderByDescending(i => i.IsConnected); 
+            return View();
         }
 
         [HttpGet]
@@ -63,7 +64,7 @@ namespace Hermes_chat.Controllers
                 {
                     int _id = _groupHandler.Create(group);
                     string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
-                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessage", user, "You were invited to a private chat: ");
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessageNotify", user, "You were invited to a private chat: ");
                     _hubContext.Clients.User(userName).SendAsync("ReceiveMessageUser", url);
                     return RedirectToAction("Users", "Chat", new { id = _id, userName = name });
                 }
