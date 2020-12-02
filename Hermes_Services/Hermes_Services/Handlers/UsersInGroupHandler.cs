@@ -79,5 +79,10 @@ namespace Hermes_Services.Handler
         {
             return _repository.GetAll().Where(t => t.GroupId == groupId).FirstOrDefault(t => t.UserId == userId);
         }
+
+        public string GetId(UsersInGroup userInGroup)
+        {
+            return _repository.GetId(userInGroup);
+        }
     }
 }

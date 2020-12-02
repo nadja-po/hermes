@@ -15,6 +15,8 @@ namespace Hermes_Models
 
         public virtual AppUser User { get; set; }
 
+        public bool IsBanned { get; set; }
+
     }
 
 }

@@ -4,6 +4,7 @@ using Hermes_Services.Data;
 using Hermes_Models;
 using Hermes_Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Hermes_Services.Repositories
 {
@@ -11,6 +12,7 @@ namespace Hermes_Services.Repositories
     public class UsersInGroupRepository : IRepository<UsersInGroup>
     {
         private readonly ApplicationDbContext _db;
+
 
         public UsersInGroupRepository()
         {
@@ -64,6 +66,14 @@ namespace Hermes_Services.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public string GetId(UsersInGroup userInGroup)
+        {
+            var result = _db.UsersInGroup.FirstOrDefault(x => x == userInGroup).UserId;
+            return result;
+        }
+
+       
     }
 }
     

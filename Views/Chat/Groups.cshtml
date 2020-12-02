@@ -42,17 +42,27 @@
                 </div>
             </div>
             @*There are @ViewBag.numberUsers users*@
-            @*<div class="col-12 col-md-3">
+            <div class="col-12 col-md-3">
                     <p>Users in this group:</p>
                     <div class="list-group">
-                        @foreach (var user in ViewBag.Users)
-                        {
-                            <a class="list-group-item list-group-item-action">
-                                @user.Name
-                            </a>
-                        }
+                        @foreach (var user in @ViewBag.UsersInGroup)
+                            if (user.IsConnected == true)
+                            {
+                                <a type="button" id="@user.UserName" class="list-group-item list-group-item-action" style="background-color:#DCAE1D"
+                                   asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
+                                    @user.UserName
+                                </a>
+                            }
+                            else
+                            {
+                                <a type="button" id="@user.UserName" class="list-group-item list-group-item-action"
+                                   asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
+                                    @user.UserName
+                                </a>
+
+                            }
                     </div>
-                </div>*@
+                </div>
             <!--</div>-->
             @*<div class="col-12 col-md-3">
                     <p>Add new user in the group:</p>

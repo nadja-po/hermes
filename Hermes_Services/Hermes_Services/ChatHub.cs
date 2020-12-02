@@ -5,18 +5,20 @@ using Microsoft.AspNetCore.Identity;
 using Hermes_Services.Data;
 using Microsoft.AspNetCore.Authorization;
 using Hermes_Models;
+using System.Linq;
 
 namespace Hermes_Services
 {
     [Authorize]
     public class ChatHub : Hub
     {
-
+        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ApplicationDbContext db;
 
-        public ChatHub(SignInManager<AppUser> signInManager, ApplicationDbContext db)
+        public ChatHub(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ApplicationDbContext db)
         {
+            _userManager = userManager;
             _signInManager = signInManager;
             this.db = db;
         }
@@ -42,13 +44,19 @@ namespace Hermes_Services
         //Notification function for incoming and outgoing users
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} joined the chat");
+            await Clients.All.SendAsync("Notify", /*$"{Context.UserIdentifier} joined the chat", */Context.UserIdentifier);
             await base.OnConnectedAsync();
+            AppUser user = this.db.AppUsers.FirstOrDefault(t => t.UserName == Context.User.Identity.Name);
+            user.IsConnected = true;
+            await _userManager.UpdateAsync(user);
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await Clients.All.SendAsync("Notify", $"{Context.UserIdentifier} left the chat");
+            await Clients.All.SendAsync("NotifyD", /*$"{Context.UserIdentifier} left the chat"*/Context.UserIdentifier);
             await base.OnDisconnectedAsync(exception);
+            AppUser user = this.db.AppUsers.FirstOrDefault(t => t.UserName == Context.User.Identity.Name);
+            user.IsConnected = false;
+            await _userManager.UpdateAsync(user);
         }
 
         //CHAT ROOMS

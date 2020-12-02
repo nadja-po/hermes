@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 using Hermes_Services;
 using Hermes_Services.Handler;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hermes_chat.Controllers
 {
@@ -26,7 +27,8 @@ namespace Hermes_chat.Controllers
         {
             ViewBag.Groups = _groupHandler.GetAll().Where(g => g.ModeratorId != null);
             ViewBag.user = _userManager.GetUserName(User);
-            return View(_userManager.Users.ToList());
+            ViewBag.users = _userManager.Users.ToList().OrderByDescending(i => i.IsConnected); 
+            return View();
         }
 
         [HttpGet]
@@ -63,7 +65,7 @@ namespace Hermes_chat.Controllers
                 {
                     int _id = _groupHandler.Create(group);
                     string url = "https://" + HttpContext.Request.Host + "/Chat/Users/" + _id.ToString() + "?userName=" + name;
-                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessage", user, "You were invited to a private chat: ");
+                    _hubContext.Clients.User(userName).SendAsync("ReceiveMessageNotify", user, "You were invited to a private chat: ");
                     _hubContext.Clients.User(userName).SendAsync("ReceiveMessageUser", url);
                     return RedirectToAction("Users", "Chat", new { id = _id, userName = name });
                 }
@@ -128,13 +130,21 @@ namespace Hermes_chat.Controllers
                 var users = _usersInGroupHandler.GetUsersByGroup(id.Value);
                 var numberUsers = _groupHandler.GetNumberUsersInGroup(id.Value);
                 var user = _userManager.GetUserId(User);
+                var userName = _userManager.GetUserName(User);
+                List<AppUser> usersInGroup = new List<AppUser>();
+                foreach (var u in users)
+                {
+                    var userInGroupId = _usersInGroupHandler.GetId(u);
+                    var user1 = _userManager.Users.FirstOrDefault(k => k.Id == userInGroupId);
+                    usersInGroup.Add(user1);
+                }
                 var userInGroup = _usersInGroupHandler.GetUserInGroup(activeGroup.Id, user);
                 ViewBag.Group = activeGroup.GroupName;
                 ViewBag.GroupId = activeGroup.Id;
                 ViewBag.userName = _userManager.GetUserName(User);
-                ViewBag.Users = users;
+                //ViewBag.Users = users;
                 ViewBag.numberUsers = numberUsers;
-                //ViewBag.user = user;
+                ViewBag.usersInGroup = usersInGroup;
                 ViewBag.userInGroup = userInGroup;
             }
 
