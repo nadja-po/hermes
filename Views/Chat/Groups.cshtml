@@ -24,45 +24,23 @@
         <a class="nav-link text-light" asp-controller="Chat" asp-action="LeaveGroup" asp-route-id="@ViewBag.GroupId"><h4>Leave Group</h4></a>
 
         <div class="row">
-
             <div class="col-12 col-md-8">
                 <div class="container-fluid; overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" id="chatContainerGroup" style="border:1px solid #cecece; height: 300px">
                 </div>
-                    <div>
-                        <p></p>
-                        Message to @ViewBag.group group
-                        <input type="hidden" id="groupName" value="@ViewBag.group" />
+                <div>
+                    <p></p>
+                    Message to @ViewBag.group group
+                    <input type="hidden" id="groupName" value="@ViewBag.group" />
                 </div>
                 <div>
                     <form class="col-12 col-md-12">
-                        <div><input type="text" id="messageInput" class="form-control" placeholder="write a message"/></div>
+                        <div><input type="text" id="messageInput" class="form-control" placeholder="write a message..." /></div>
                         <div class="row">&nbsp;</div>
                         <div><input type="submit" input name="submit" id="sendButton" value="Send Message" class="btn btn-primary" /></div>
                     </form>
                 </div>
+                <div>&nbsp;</div>
             </div>
-            @*There are @ViewBag.numberUsers users*@
-            <div class="col-12 col-md-3">
-                    <p>Users in this group:</p>
-                    <div class="list-group">
-                        @foreach (var user in @ViewBag.UsersInGroup)
-                            if (user.IsConnected == true)
-                            {
-                                <a type="button" id="@user.UserName" class="list-group-item list-group-item-action" style="background-color:#DCAE1D"
-                                   asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
-                                    @user.UserName
-                                </a>
-                            }
-                            else
-                            {
-                                <a type="button" id="@user.UserName" class="list-group-item list-group-item-action"
-                                   asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
-                                    @user.UserName
-                                </a>
-
-                            }
-                    </div>
-                </div>
             <!--</div>-->
             @*<div class="col-12 col-md-3">
                     <p>Add new user in the group:</p>
@@ -75,8 +53,28 @@
                     </div>
                 </div>*@
         <div class="col-12 col-md-4">
-            <h1>@ViewBag.group</h1>
-            <h2>group chat</h2>
+            <h2>@ViewBag.group group chat</h2>
+            @*There are @ViewBag.numberUsers users*@
+            <div class="col-12 col-md-7">
+                <p>Users in this group:</p>
+                <div class="list-group overflow-auto text-break" style="max-height: 300px">
+                    @foreach (var user in @ViewBag.UsersInGroup)
+                        if (user.IsConnected == true)
+                        {
+                            <a type="button" id="@user.UserName" class="list-group-item list-group-item-action" style="background-color:#DCAE1D"
+                               asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
+                                @user.UserName
+                            </a>
+                        }
+                        else
+                        {
+                            <a type="button" id="@user.UserName" class="list-group-item list-group-item-action"
+                               asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
+                                @user.UserName
+                            </a>
+                        }
+                </div>
+            </div>
         </div>
         </div>
     }
