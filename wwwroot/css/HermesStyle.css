@@ -183,3 +183,7 @@ body {
     color: #495057;
     text-align: inherit;
 }
+
+#form {
+    display: flex;
+}

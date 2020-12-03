@@ -84,5 +84,10 @@ namespace Hermes_Services.Handler
         {
             return _repository.GetId(userInGroup);
         }
+
+        public IEnumerable<UsersInGroup> GetAllBanned(int groupId)
+        {
+            return _repository.GetAllBanned(groupId);
+        }
     }
 }

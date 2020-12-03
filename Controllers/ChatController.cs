@@ -16,7 +16,7 @@ namespace Hermes_chat.Controllers
         private GroupHandler _groupHandler = new GroupHandler();
         private UsersInGroupHandler _usersInGroupHandler = new UsersInGroupHandler();
         private readonly IHubContext<ChatHub> _hubContext;
-        
+
         public ChatController(UserManager<AppUser> userManager, IHubContext<ChatHub> hubContext)
         {
             _userManager = userManager;
@@ -27,7 +27,7 @@ namespace Hermes_chat.Controllers
         {
             ViewBag.Groups = _groupHandler.GetAll().Where(g => g.ModeratorId != null);
             ViewBag.user = _userManager.GetUserName(User);
-            ViewBag.users = _userManager.Users.ToList().OrderByDescending(i => i.IsConnected); 
+            ViewBag.users = _userManager.Users.ToList().OrderByDescending(i => i.IsConnected);
             return View();
         }
 
@@ -35,7 +35,7 @@ namespace Hermes_chat.Controllers
         public IActionResult Users(int? id, string userName)
         {
             var groups = _groupHandler.GetAll();
-            if (id.HasValue && _groupHandler.GetAll().Any(x => x.Id == id) && _userManager.Users.Any(x=>x.UserName == userName))
+            if (id.HasValue && _groupHandler.GetAll().Any(x => x.Id == id) && _userManager.Users.Any(x => x.UserName == userName))
             {
                 var activeGroup = groups.FirstOrDefault(g => g.Id == id);
                 var creatorId = activeGroup.CreatorId;
@@ -94,7 +94,7 @@ namespace Hermes_chat.Controllers
         public IActionResult CreateGroup(string groupName)
         {
             var user = _userManager.GetUserAsync(User).Result;
-            Group group = new Group { CreatorId = user.Id, GroupName = groupName, ModeratorId = user.Id};
+            Group group = new Group { CreatorId = user.Id, GroupName = groupName, ModeratorId = user.Id };
             if (user.UsersInGroup == null)
             {
                 user.UsersInGroup = new List<UsersInGroup>();
@@ -142,9 +142,8 @@ namespace Hermes_chat.Controllers
                 ViewBag.Group = activeGroup.GroupName;
                 ViewBag.GroupId = activeGroup.Id;
                 ViewBag.userName = _userManager.GetUserName(User);
-                //ViewBag.Users = users;
                 ViewBag.numberUsers = numberUsers;
-                ViewBag.usersInGroup = usersInGroup;
+                ViewBag.usersInGroup = usersInGroup.OrderByDescending(i => i.IsConnected);
                 ViewBag.userInGroup = userInGroup;
             }
 
@@ -161,7 +160,7 @@ namespace Hermes_chat.Controllers
         {
             var group = _groupHandler.GetById(id);
             var user = _userManager.GetUserAsync(User).Result;
-             if (user.UsersInGroup == null)
+            if (user.UsersInGroup == null)
             {
                 user.UsersInGroup = new List<UsersInGroup>();
             }
@@ -185,13 +184,13 @@ namespace Hermes_chat.Controllers
             var users = _usersInGroupHandler.GetUsersByGroup(id);
             _usersInGroupHandler.DeleteUserIntoGroup(id, user.Id);
             _hubContext.Clients.Group(activeGroup.GroupName).SendAsync("NotifyGroup", $"{user.UserName} left the group");
-            if(_usersInGroupHandler.GetUsersByGroup(id).Count < 1)
+            if (_usersInGroupHandler.GetUsersByGroup(id).Count < 1)
             {
                 _groupHandler.Delete(activeGroup);
             }
             else
             {
-                if(user.Id == activeGroup.ModeratorId)
+                if (user.Id == activeGroup.ModeratorId)
                 {
                     var nextUser = _usersInGroupHandler.GetUsersByGroup(id).FirstOrDefault(l => l.UserId != oldModerator);
                     _groupHandler.ChangeModeratorInGroup(id, nextUser.UserId);
@@ -200,6 +199,31 @@ namespace Hermes_chat.Controllers
                 }
             }
             return RedirectToAction(nameof(ChatUsers));
+        }
+
+        public IActionResult BanList(int? groupId)
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+            var activeGroup = _groupHandler.GetById(groupId.Value);
+            var moderatorId = activeGroup.ModeratorId;
+            var moderator = _userManager.Users.FirstOrDefault(k => k.Id == moderatorId);
+            var users = _usersInGroupHandler.GetUsersByGroup(groupId.Value);
+            var banList = _usersInGroupHandler.GetAllBanned(groupId.Value);
+            ViewBag.Moderator = moderator.UserName;
+            ViewBag.Group = activeGroup.GroupName;
+            ViewBag.GroupId = activeGroup.Id;
+            ViewBag.Banlist = banList;
+            return View();
+        }
+        public IActionResult Banned(int? groupId, string id)
+        {
+            _usersInGroupHandler.Banned(groupId.Value, id);
+            return View(nameof(Groups));
+        }
+        public IActionResult Return(int? groupId, string id)
+        {
+            _usersInGroupHandler.Return(groupId.Value, id);
+            return View(nameof(Ban));
         }
     }
 }

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Ban";
+}
+
+@if (Context.User.Identity.IsAuthenticated)
+{
+    @if (Context.User.Identity.Name == ViewBag.moderator)
+    {
+        <div class="text-center">
+            <h1>Ban list @ViewBag.Group group</h1>
+        </div>
+        <table class="table table-striped">
+
+            @foreach (var user in @ViewBag.Banlist)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <a asp-controller="Chat" asp-action="Return" asp-route-groupId="@ViewBag.GroupId" asp-route-id="@user.Id">
+                            Return
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+    }
+    else
+    {
+        <div class="text-center">
+
+            <h1>You don't have access to this page!</h1>
+            <img src="~/Resources/imposter.jpg" />
+
+        </div>
+    }
+}

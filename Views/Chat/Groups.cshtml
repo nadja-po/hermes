@@ -42,27 +42,38 @@
                 </div>
             </div>
             @*There are @ViewBag.numberUsers users*@
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-4">
                     <p>Users in this group:</p>
                     <div class="list-group">
                         @foreach (var user in @ViewBag.UsersInGroup)
                             if (user.IsConnected == true)
                             {
-                                <a type="button" id="@user.UserName" class="list-group-item list-group-item-action" style="background-color:#DCAE1D"
-                                   asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
-                                    @user.UserName
-                                </a>
+                                <div id="form">
+                                    <a type="button" id="@user.UserName" class="list-group-item list-group-item-action" style="background-color:#DCAE1D"
+                                       asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
+                                        @user.UserName
+                                    </a>
+                                    <a type="button" class="list-group-item list-group-item-action" style="float:right"
+                                       asp-controller="Chat" asp-action="Banned" asp-route-groupId="@ViewBag.GroupId" asp-route-id="@user.Id">
+                                        ban this user
+                                    </a>
+                                </div>
                             }
                             else
                             {
-                                <a type="button" id="@user.UserName" class="list-group-item list-group-item-action"
-                                   asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
-                                    @user.UserName
-                                </a>
-
+                                <div id="form">
+                                    <a type="button" id="@user.UserName" class="list-group-item list-group-item-action"
+                                       asp-controller="Chat" asp-action="UserPrivateChat" asp-route-userName="@user.UserName">
+                                        @user.UserName
+                                    </a>
+                                    <a type="button" class="list-group-item list-group-item-action" style="float:right"
+                                       asp-controller="Chat" asp-action="Banned" asp-route-groupId="@ViewBag.GroupId" asp-route-id="@user.Id">
+                                        ban this user
+                                    </a>
+                                </div>
                             }
                     </div>
-                </div>
+            </div>
             <!--</div>-->
             @*<div class="col-12 col-md-3">
                     <p>Add new user in the group:</p>

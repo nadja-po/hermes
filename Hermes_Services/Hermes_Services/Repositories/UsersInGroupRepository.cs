@@ -73,7 +73,10 @@ namespace Hermes_Services.Repositories
             return result;
         }
 
-       
-    }
+        public IEnumerable<UsersInGroup> GetAllBanned(int groupId)
+        {
+            var result = _db.UsersInGroup.ToList<UsersInGroup>().Where(k => k.Id == groupId).Where(l => l.IsBanned == true);
+            return result;
+        }
 }
     
