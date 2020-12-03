@@ -52,7 +52,7 @@ namespace Hermes_Services
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await Clients.All.SendAsync("NotifyD", /*$"{Context.UserIdentifier} left the chat"*/Context.UserIdentifier);
+            //await Clients.All.SendAsync("NotifyD", /*$"{Context.UserIdentifier} left the chat"*/Context.UserIdentifier);
             await base.OnDisconnectedAsync(exception);
             AppUser user = this.db.AppUsers.FirstOrDefault(t => t.UserName == Context.User.Identity.Name);
             user.IsConnected = false;
